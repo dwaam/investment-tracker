@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres:alpine
+    shm_size: 8g
+    ports:
+      - 55432:5432
+    command: postgres -c 'max_connections=120'
+    environment:
+      POSTGRES_DB: investment-tracker
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: "admin-local"
+    volumes:
+      - investment-tracker-pgdump:/var/lib/postgresql/dump
+      - investment-tracker-pgdata:/var/lib/postgresql/data
+
+volumes:
+  investment-tracker-pgdump:
+  investment-tracker-pgdata:
