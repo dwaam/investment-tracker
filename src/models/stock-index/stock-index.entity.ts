@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
+import { StockCategory } from '@/models/stock-index/stock-index.enum';
+
 @Entity('stock_indexes')
 export class StockIndex {
   @PrimaryColumn({ name: 'isin' })
@@ -13,4 +15,12 @@ export class StockIndex {
 
   @Column({ name: 'currency' })
   currency: string;
+
+  @Column({
+    name: 'category',
+    nullable: true,
+    type: 'enum',
+    enum: StockCategory,
+  })
+  category: StockCategory | null;
 }
