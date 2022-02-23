@@ -9,5 +9,6 @@ import { StockTransactionService } from './stock-transaction.service';
   controllers: [StockTransactionController],
   imports: [TypeOrmModule.forFeature([StockTransaction])],
   providers: [StockTransactionService],
+  exports: [StockTransactionService],
 })
 export class StockTransactionModule {}

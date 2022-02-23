@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { StockTransactionService } from '@/models/stock-transaction/stock-transaction.service';
 import { StockTransaction } from '@/models/stock-transaction/stock-transaction.entity';
-import { StockCategory } from '@/models/stock-index/stock-index.enum';
+import { defaultStockTransaction } from '../../utils/transaction.fake-data';
 
 describe('stock-transaction', () => {
   let stockTransactionService: StockTransactionService;
@@ -28,27 +28,25 @@ describe('stock-transaction', () => {
 
   describe('saveOne', () => {
     it('Should call repository to save transaction when "saveOne" is called.', async () => {
-      const transaction: StockTransaction = {
-        id: 'transaction-ONE',
-        action: 'DEPOSIT',
-        currencyConversionFee: 0,
-        date: new Date(),
-        exchangeRate: 0,
-        numberOfShares: 0,
-        pricePerShare: 0,
-        totalInEuro: 0,
-        index: {
-          id: 'R2D2',
-          ticker: 'MMM',
-          name: '3M',
-          currency: 'USD',
-          category: StockCategory.CONSUMER_DISCRETIONARY,
+      await stockTransactionService.saveOne(defaultStockTransaction);
+
+      expect(stockTransactionRepositoryMock.save).toHaveBeenCalledWith(defaultStockTransaction);
+    });
+  });
+
+  describe('saveAll', () => {
+    it('Should call repository to save transaction when "saveOne" is called.', async () => {
+      const transactions: StockTransaction[] = [
+        defaultStockTransaction,
+        {
+          ...defaultStockTransaction,
+          id: 'TOTO',
         },
-      };
+      ];
 
-      await stockTransactionService.saveOne(transaction);
+      await stockTransactionService.saveAll(transactions);
 
-      expect(stockTransactionRepositoryMock.save).toHaveBeenCalledWith(transaction);
+      expect(stockTransactionRepositoryMock.save).toHaveBeenCalledWith(transactions);
     });
   });
 });

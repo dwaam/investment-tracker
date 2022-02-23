@@ -4,7 +4,7 @@ import { StockCategory } from '@/models/stock-index/stock-index.enum';
 
 @Entity('stock_indexes')
 export class StockIndex {
-  @PrimaryColumn({ name: 'isin' })
+  @PrimaryColumn({ name: 'isin', type: 'varchar' })
   id: string;
 
   @Column({ name: 'ticker' })
@@ -22,5 +22,5 @@ export class StockIndex {
     type: 'enum',
     enum: StockCategory,
   })
-  category: StockCategory | null;
+  category?: StockCategory | null;
 }

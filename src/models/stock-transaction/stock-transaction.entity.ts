@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { StockIndex } from '@/models/stock-index/stock-index.entity';
+import { TransactionTypeEnum } from '@/models/stock-transaction/stock-transaction.enum';
 
 @Entity('stock_transactions')
 export class StockTransaction {
@@ -10,22 +11,27 @@ export class StockTransaction {
   @Column({ name: 'date', type: 'date' })
   date: Date;
 
-  @Column({ name: 'action' })
-  action: string;
+  @Column({
+    name: 'action',
+    nullable: false,
+    type: 'enum',
+    enum: TransactionTypeEnum,
+  })
+  action: TransactionTypeEnum;
 
-  @Column({ name: 'number_of_shares' })
+  @Column({ name: 'number_of_shares', type: 'double precision' })
   numberOfShares: number;
 
-  @Column({ name: 'price_per_share' })
+  @Column({ name: 'price_per_share', type: 'double precision' })
   pricePerShare: number;
 
-  @Column({ name: 'exchange_rate' })
+  @Column({ name: 'exchange_rate', type: 'double precision' })
   exchangeRate: number;
 
-  @Column({ name: 'total_in_euro' })
+  @Column({ name: 'total_in_euro', type: 'double precision' })
   totalInEuro: number;
 
-  @Column({ name: 'currency_conversion_fee' })
+  @Column({ name: 'currency_conversion_fee', type: 'double precision' })
   currencyConversionFee: number;
 
   @JoinColumn({ name: 'index_id' })

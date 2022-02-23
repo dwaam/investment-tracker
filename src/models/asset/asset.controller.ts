@@ -2,7 +2,7 @@ import { Controller, Param, Post, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
 
-import { StockIntegrationService } from '@/models/asset/stock-integration.service';
+import { StockIntegrationService } from '@/models/asset/stock-integration/stock-integration.service';
 
 @Controller('asset')
 export class AssetController {

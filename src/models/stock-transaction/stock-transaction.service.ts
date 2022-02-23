@@ -10,7 +10,11 @@ export class StockTransactionService {
     private stockTransactionRepository: Repository<StockTransaction>,
   ) {}
 
-  async saveOne(stockTransaction: StockTransaction) {
+  saveOne(stockTransaction: StockTransaction) {
     return this.stockTransactionRepository.save(stockTransaction);
+  }
+
+  saveAll(stockTransactions: StockTransaction[]) {
+    return this.stockTransactionRepository.save(stockTransactions);
   }
 }
