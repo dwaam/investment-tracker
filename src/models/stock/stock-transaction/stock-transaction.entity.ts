@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
-import { StockIndex } from '@/models/stock-index/stock-index.entity';
-import { TransactionTypeEnum } from '@/models/stock-transaction/stock-transaction.enum';
+import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
+import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
 
 @Entity('stock_transactions')
 export class StockTransaction {

@@ -1,6 +1,6 @@
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
-import { StockTransaction } from '@/models/stock-transaction/stock-transaction.entity';
-import { TransactionTypeEnum } from '@/models/stock-transaction/stock-transaction.enum';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
 
 const transactionId = 'R2D2';
 const tickerId = 'C3PO';

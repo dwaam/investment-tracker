@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { StockTransactionService } from '@/models/stock-transaction/stock-transaction.service';
-import { StockTransaction } from '@/models/stock-transaction/stock-transaction.entity';
-import { defaultStockTransaction } from '../../utils/transaction.fake-data';
+import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { defaultStockTransaction } from '../../../utils/transaction.fake-data';
 
 describe('stock-transaction', () => {
   let stockTransactionService: StockTransactionService;

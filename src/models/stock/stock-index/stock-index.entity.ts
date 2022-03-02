@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-import { StockCategory } from '@/models/stock-index/stock-index.enum';
+import { StockCategory } from '@/models/stock/stock-index/stock-index.enum';
 
 @Entity('stock_indexes')
 export class StockIndex {

@@ -1,4 +1,4 @@
-import { TransactionTypeEnum } from '@/models/stock-transaction/stock-transaction.enum';
+import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
 
 export const TRADING_212_COLUMN_NAMES = [
   'action',

@@ -4,7 +4,7 @@ import { createReadStream } from 'fs';
 
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
 import { TRADING_212_COLUMN_NAMES } from '@/models/asset/stock-integration/stock-integration.constant';
-import { StockTransactionService } from '@/models/stock-transaction/stock-transaction.service';
+import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import { convertToStockTransactions } from '@/models/asset/stock-integration/stock-integration.converter';
 
 @Injectable()

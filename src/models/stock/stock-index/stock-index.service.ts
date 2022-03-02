@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { StockIndex } from '@/models/stock-index/stock-index.entity';
-import { UpdateStockIndexDto } from '@/models/stock-index/dto/update-stock-index.dto';
+import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
+import { UpdateStockIndexDto } from '@/models/stock/stock-index/dto/update-stock-index.dto';
 
 @Injectable()
 export class StockIndexService {

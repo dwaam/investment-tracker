@@ -1,5 +1,5 @@
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
-import { StockTransaction } from '@/models/stock-transaction/stock-transaction.entity';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import {
   convertToStockTransaction,
   convertToStockTransactions,

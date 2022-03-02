@@ -1,4 +1,4 @@
-import { StockTransaction } from '@/models/stock-transaction/stock-transaction.entity';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { TRANSACTION_TYPE_LINK } from '@/models/asset/stock-integration/stock-integration.constant';
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
 
