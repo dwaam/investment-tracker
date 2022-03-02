@@ -3,9 +3,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
-import { defaultStockTransaction } from '../../../utils/transaction.fake-data';
 
-describe('stock-transaction', () => {
+import { defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
+
+describe('stock-transaction.service', () => {
   let stockTransactionService: StockTransactionService;
 
   const stockTransactionRepositoryMock = {
@@ -35,7 +36,7 @@ describe('stock-transaction', () => {
   });
 
   describe('saveAll', () => {
-    it('Should call repository to save transaction when "saveOne" is called.', async () => {
+    it('Should call repository to save transactions when "saveAll" is called.', async () => {
       const transactions: StockTransaction[] = [
         defaultStockTransaction,
         {

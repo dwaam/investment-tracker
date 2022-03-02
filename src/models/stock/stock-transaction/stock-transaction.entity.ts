@@ -5,7 +5,7 @@ import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-tran
 
 @Entity('stock_transactions')
 export class StockTransaction {
-  @PrimaryColumn({ name: 'id' })
+  @PrimaryColumn({ name: 'id', type: 'varchar' })
   id: string;
 
   @Column({ name: 'date', type: 'date' })

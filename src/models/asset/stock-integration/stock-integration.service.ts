@@ -34,7 +34,6 @@ export class StockIntegrationService {
   }
 
   handleChunkOfData(stockData: DataFromTrading212[]) {
-    console.log(stockData);
     this.integrateCommonTransactions(
       stockData.filter((transaction) => ['Market buy', 'Market sell'].includes(transaction.action)),
     );

@@ -2,7 +2,7 @@ import { when } from 'jest-when';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { convertToStockTransactions } from '@/models/asset/stock-integration/stock-integration.converter';
-import { defaultDataFromTrading212, defaultStockTransaction } from '../../../utils/transaction.fake-data';
+import { defaultDataFromTrading212, defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import { StockIntegrationService } from '@/models/asset/stock-integration/stock-integration.service';
 import { DataFromTrading212 } from '@/models/asset/asset.interface';

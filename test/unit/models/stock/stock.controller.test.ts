@@ -5,7 +5,7 @@ import { StockBalance } from '@/models/stock/stock.interface';
 
 jest.mock('@/models/stock/stock-transaction/stock-transaction.service');
 
-describe('Stock controller', () => {
+describe('stock.controller', () => {
   let stockController: StockController;
 
   const stockTransactionServiceMock = {
@@ -19,7 +19,7 @@ describe('Stock controller', () => {
         {
           provide: StockTransactionService,
           useFactory: () => stockTransactionServiceMock,
-        }
+        },
       ],
     }).compile();
 

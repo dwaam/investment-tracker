@@ -4,7 +4,7 @@ import {
   convertToStockTransaction,
   convertToStockTransactions,
 } from '@/models/asset/stock-integration/stock-integration.converter';
-import { defaultDataFromTrading212, defaultStockTransaction } from '../../../utils/transaction.fake-data';
+import { defaultDataFromTrading212, defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
 
 describe('Stock integration converter', () => {
   describe('convertToStockTransaction', () => {

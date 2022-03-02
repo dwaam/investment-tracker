@@ -8,11 +8,14 @@ import { StockIndexService } from '@/models/stock/stock-index/stock-index.servic
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { StockController } from '@/models/stock/stock.controller';
+import { DividendController } from '@/models/stock/dividend/dividend.controller';
+import { Dividend } from '@/models/stock/dividend/dividend.entity';
+import { DividendService } from '@/models/stock/dividend/dividend.service';
 
 @Module({
-  controllers: [StockTransactionController, StockIndexController, StockController],
-  imports: [TypeOrmModule.forFeature([StockTransaction, StockIndex])],
-  providers: [StockTransactionService, StockIndexService],
+  controllers: [StockTransactionController, StockIndexController, StockController, DividendController],
+  imports: [TypeOrmModule.forFeature([StockTransaction, StockIndex, Dividend])],
+  providers: [StockTransactionService, StockIndexService, DividendService],
   exports: [StockTransactionService],
 })
 export class StockModule {}
