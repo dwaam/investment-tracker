@@ -4,7 +4,8 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  collectCoverageFrom: ['**/*.(t|j)s'],
+  collectCoverageFrom: ['./src/**/*.(t|j)s'],
+  coveragePathIgnorePatterns: ['.module.ts', '<rootDir>/src/migration', '<rootDir>/src/app/main.ts'],
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
   },
