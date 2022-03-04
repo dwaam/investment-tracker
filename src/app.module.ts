@@ -6,10 +6,6 @@ import { StockModule } from '@/models/stock/stock.module';
 import { config } from '@/config/database/ormconfig';
 
 @Module({
-  imports: [
-    StockModule,
-    AssetModule,
-    TypeOrmModule.forRoot(config),
-  ],
+  imports: [StockModule, AssetModule, TypeOrmModule.forRoot(config)],
 })
 export class AppModule {}

@@ -13,7 +13,7 @@ export const config: TypeOrmModuleOptions = {
   database: 'investment-tracker',
   // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   entities: [StockIndex, StockTransaction, Dividend],
-  migrations: ['src/migration/*{.ts,.js}'],
+  // migrations: ['src/migration/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/migration',
   },

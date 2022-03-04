@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
+import { StockBalance } from '@/models/stock/stock.interface';
+import { StockTransactionRepository } from '@/models/stock/stock-transaction/stock-transaction.repository';
 
 import { defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
 
@@ -11,6 +13,7 @@ describe('stock-transaction.service', () => {
 
   const stockTransactionRepositoryMock = {
     save: jest.fn(),
+    getInvestedAmountBalance: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -18,7 +21,7 @@ describe('stock-transaction.service', () => {
       providers: [
         StockTransactionService,
         {
-          provide: getRepositoryToken(StockTransaction),
+          provide: StockTransactionRepository,
           useFactory: () => stockTransactionRepositoryMock,
         },
       ],
@@ -48,6 +51,36 @@ describe('stock-transaction.service', () => {
       await stockTransactionService.saveAll(transactions);
 
       expect(stockTransactionRepositoryMock.save).toHaveBeenCalledWith(transactions);
+    });
+  });
+
+  describe('getInvestedAmountBalance', () => {
+    it('Should return the stock balance when "getInvestedAmountBalance" is called.', async () => {
+      const resultFromRepository = [
+        {
+          action: TransactionTypeEnum.BUY,
+          amount: 2,
+        },
+        {
+          action: 'ILoveKebab',
+          amount: 3,
+        },
+        {
+          action: TransactionTypeEnum.SELL,
+          amount: 4,
+        },
+      ];
+
+      const expectedBalance: StockBalance = {
+        bought: 2,
+        sold: 4,
+      };
+
+      stockTransactionRepositoryMock.getInvestedAmountBalance.mockResolvedValue(resultFromRepository);
+
+      const balance = await stockTransactionService.getInvestedAmountBalance();
+
+      expect(balance).toEqual(expectedBalance);
     });
   });
 });
