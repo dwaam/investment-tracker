@@ -4,6 +4,8 @@ import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 
+export const entities = [StockIndex, StockTransaction, Dividend];
+
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
   host: 'localhost',
@@ -11,11 +13,9 @@ export const config: TypeOrmModuleOptions = {
   username: 'admin',
   password: 'admin-local',
   database: 'investment-tracker',
-  // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  entities: [StockIndex, StockTransaction, Dividend],
-  // migrations: ['src/migration/*{.ts,.js}'],
+  entities,
+  migrations: ['src/migration/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/migration',
   },
-  synchronize: true,
 }
