@@ -12,4 +12,4 @@ export const config: TypeOrmModuleOptions = {
   entities,
   dropSchema: true,
   synchronize: true,
-}
+};

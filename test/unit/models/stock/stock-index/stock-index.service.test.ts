@@ -50,8 +50,7 @@ describe('stock-index.service', () => {
     it('Should call repository with index to update when "update" is called.', async () => {
       await stockIndexService.update(defaultStockIndexDto);
 
-      expect(stockIndexRepositoryMock.update)
-        .toHaveBeenCalledWith(defaultStockIndexDto.id, defaultStockIndexDto);
+      expect(stockIndexRepositoryMock.update).toHaveBeenCalledWith(defaultStockIndexDto.id, defaultStockIndexDto);
     });
   });
 });

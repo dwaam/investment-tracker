@@ -25,4 +25,4 @@ export const TRADING_212_COLUMN_NAMES = [
 export const TRANSACTION_TYPE_LINK = {
   'Market buy': TransactionTypeEnum.BUY,
   'Market sell': TransactionTypeEnum.SELL,
-}
+};

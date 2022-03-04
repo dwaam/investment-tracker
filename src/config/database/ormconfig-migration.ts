@@ -1,3 +1,3 @@
-import { config } from './ormconfig';
+import { createConfig } from './ormconfig';
 
-export = config;
+export = createConfig();

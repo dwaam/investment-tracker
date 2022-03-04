@@ -6,16 +6,17 @@ import { Dividend } from '@/models/stock/dividend/dividend.entity';
 
 export const entities = [StockIndex, StockTransaction, Dividend];
 
-export const config: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 55432,
-  username: 'admin',
-  password: 'admin-local',
-  database: 'investment-tracker',
-  entities,
-  migrations: ['src/migration/*{.ts,.js}'],
-  cli: {
-    migrationsDir: 'src/migration',
-  },
-}
+export const createConfig = () =>
+  ({
+    type: 'postgres',
+    host: process.env.DATABASE_HOST,
+    port: +process.env.DATABASE_PORT,
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    entities,
+    // migrations: ['src/migration/*{.ts,.js}'],
+    cli: {
+      migrationsDir: 'src/migration',
+    },
+  } as TypeOrmModuleOptions);
