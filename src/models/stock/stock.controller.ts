@@ -10,4 +10,9 @@ export class StockController {
   getInvestmentBalance() {
     return this.stockTransactionService.getInvestedAmountBalance();
   }
+
+  @Get('/investments-by-month')
+  getAmountInvestedByMonthy() {
+    return this.stockTransactionService.getInvestedAmountsByMonth();
+  }
 }

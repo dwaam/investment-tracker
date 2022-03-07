@@ -1,6 +1,7 @@
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
+import { InvestedAmountsByMonth } from '@/models/stock/stock.interface';
 
 const transactionId = 'R2D2';
 const tickerId = 'C3PO';
@@ -52,3 +53,21 @@ export const defaultStockTransaction: StockTransaction = {
     name: stockName,
   },
 };
+
+export const defaultInvestedAmountsByMonth: InvestedAmountsByMonth[] = [
+  {
+    month: new Date('2022-01-01T00:00:00.000Z'),
+    amount: 1477.59,
+    action: TransactionTypeEnum.BUY,
+  },
+  {
+    month: new Date('2022-01-01T00:00:00.000Z'),
+    amount: 22.73,
+    action: TransactionTypeEnum.SELL,
+  },
+  {
+    month: new Date('2022-02-01T00:00:00.000Z'),
+    amount: 2209.69,
+    action: TransactionTypeEnum.BUY,
+  },
+];

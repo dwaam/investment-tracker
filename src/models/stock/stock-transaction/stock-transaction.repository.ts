@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
 
 @EntityRepository(StockTransaction)
 export class StockTransactionRepository extends Repository<StockTransaction> {
@@ -10,5 +11,15 @@ export class StockTransactionRepository extends Repository<StockTransaction> {
       .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')
       .groupBy('action')
       .getRawMany();
+  }
+
+  getAmountInvestedByMonth() {
+    return this.createQueryBuilder('transaction')
+      .select("date_trunc('month', date) AS month")
+      .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')
+      .addSelect('action')
+      .groupBy('month')
+      .addGroupBy('action')
+      .getRawMany<InvestedAmountsByMonthRaw>();
   }
 }
