@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { StockCategory } from '@/models/stock/stock-index/stock-index.enum';
+import { CountryTax } from '@/models/stock/country-tax/country-tax.entity';
 
 @Entity('stock_indexes')
 export class StockIndex {
@@ -23,4 +24,8 @@ export class StockIndex {
     enum: StockCategory,
   })
   category?: StockCategory | null;
+
+  @JoinColumn({ name: 'country' })
+  @ManyToOne(() => CountryTax, (country) => country.country, { cascade: ['insert', 'update'], nullable: true })
+  country?: CountryTax;
 }

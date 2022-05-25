@@ -1,9 +1,10 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
+import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorator';
 
-@EntityRepository(Dividend)
+@CustomRepository(Dividend)
 export class DividendRepository extends Repository<Dividend> {
   getDividendByMonth() {
     return this.createQueryBuilder('dividend')

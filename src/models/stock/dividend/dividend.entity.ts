@@ -28,7 +28,10 @@ export class Dividend {
   @Column({ name: 'withholding_tax', type: 'double precision' })
   withholdingTax: number;
 
+  @PrimaryColumn({ name: 'index_id', type: 'uuid' })
+  indexId?: string;
+
   @JoinColumn({ name: 'index_id' })
-  @ManyToOne(() => StockIndex, (index) => index.id, { cascade: ['insert', 'update'], primary: true })
+  @ManyToOne(() => StockIndex, (index) => index.id, { cascade: ['insert', 'update'] })
   index: StockIndex;
 }

@@ -10,9 +10,12 @@ import {
   convertToStockTransactions,
 } from '@/models/asset/stock-integration/stock-integration.converter';
 import { DividendService } from '@/models/stock/dividend/dividend.service';
+import { getLoggerFor } from '@/utils/logger.util';
 
 @Injectable()
 export class StockIntegrationService {
+  private readonly logger = getLoggerFor('StockIntegrationService');
+
   constructor(private stockTransactionService: StockTransactionService, private dividendService: DividendService) {}
 
   readFile(fileName: string) {
@@ -38,9 +41,12 @@ export class StockIntegrationService {
   }
 
   handleChunkOfData(stockData: DataFromTrading212[]) {
+    this.logger.log('Integrate common transactions');
     this.integrateCommonTransactions(
       stockData.filter((transaction) => ['Market buy', 'Market sell'].includes(transaction.action)),
     );
+
+    this.logger.log('Integrate dividend transactions');
     this.integrateDividends(
       stockData.filter((transaction) =>
         ['Dividend (Ordinary)', 'Dividend (Property income)'].includes(transaction.action),

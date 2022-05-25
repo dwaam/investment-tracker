@@ -1,9 +1,10 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
+import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorator';
 
-@EntityRepository(StockTransaction)
+@CustomRepository(StockTransaction)
 export class StockTransactionRepository extends Repository<StockTransaction> {
   getInvestedAmountBalance() {
     return this.createQueryBuilder('transaction')

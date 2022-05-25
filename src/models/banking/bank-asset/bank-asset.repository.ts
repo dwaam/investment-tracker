@@ -1,6 +1,7 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { BankAsset } from '@/models/banking/bank-asset/bank-asset.entity';
+import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorator';
 
-@EntityRepository(BankAsset)
+@CustomRepository(BankAsset)
 export class BankAssetRepository extends Repository<BankAsset> {}

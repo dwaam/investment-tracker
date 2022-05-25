@@ -6,10 +6,11 @@ import { BankAssetRepository } from '@/models/banking/bank-asset/bank-asset.repo
 import { BankAsset } from '@/models/banking/bank-asset/bank-asset.entity';
 import { Bank } from '@/models/banking/bank/bank.entity';
 import { BankAssetService } from '@/models/banking/bank-asset/bank-asset.service';
+import { TypeOrmExModule } from '@/config/database/toDelete/typeorm-ex.module';
 
 @Module({
   controllers: [BankAssetController],
-  imports: [TypeOrmModule.forFeature([BankAssetRepository, BankAsset, Bank])],
+  imports: [TypeOrmModule.forFeature([BankAsset, Bank]), TypeOrmExModule.forCustomRepository([BankAssetRepository])],
   providers: [BankAssetService],
 })
 export class BankinModule {}
