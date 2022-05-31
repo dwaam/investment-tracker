@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { DividendService } from '@/models/stock/dividend/dividend.service';
 
@@ -9,5 +9,15 @@ export class DividendController {
   @Get('/return-by-month')
   getDividendByMonthy() {
     return this.dividendService.getDividendByMonth();
+  }
+
+  @Get('/per-year/:year')
+  getDividendPerYear(@Param('year') year: number) {
+    return this.dividendService.getDividendPerYear(year);
+  }
+
+  @Get('/per-year-by-countries/:year')
+  getDividendPerYearByCountries(@Param('year') year: number) {
+    return this.dividendService.getDividendPerYearByCountry(year);
   }
 }

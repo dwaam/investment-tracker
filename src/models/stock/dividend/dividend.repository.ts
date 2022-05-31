@@ -1,4 +1,5 @@
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
+import { DateTime } from 'luxon';
 
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
@@ -12,5 +13,21 @@ export class DividendRepository extends Repository<Dividend> {
       .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')
       .groupBy('month')
       .getRawMany<InvestedAmountsByMonthRaw>();
+  }
+
+  getDividendsPerYear(year: number) {
+    const beginDate = DateTime.fromISO(`${year}-01-01`);
+    const endDate = DateTime.fromISO(`${year}-12-31`);
+
+    return this.find({
+      relations: {
+        index: {
+          country: true,
+        },
+      },
+      where: {
+        date: Between(beginDate, endDate),
+      },
+    });
   }
 }
