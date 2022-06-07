@@ -20,4 +20,9 @@ export class DividendController {
   getDividendPerYearByCountries(@Param('year') year: number) {
     return this.dividendService.getDividendPerYearByCountry(year);
   }
+
+  @Get('/tax-form/:year')
+  getTaxFormPerYear(@Param('year') year: number) {
+    return this.dividendService.getTaxFormInputForYear(year);
+  }
 }

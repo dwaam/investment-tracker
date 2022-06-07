@@ -7,4 +7,7 @@ export class CountryTax {
 
   @Column({ name: 'tax_percentage', type: 'double precision' })
   taxPercentage: number;
+
+  @Column({ name: 'tax_rate_to_apply', type: 'double precision' })
+  taxRateToApply: number;
 }
