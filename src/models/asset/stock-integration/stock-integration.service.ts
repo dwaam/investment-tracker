@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as papa from 'papaparse';
 import { createReadStream } from 'fs';
+import * as _ from 'lodash';
 
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
 import { TRADING_212_COLUMN_NAMES } from '@/models/asset/stock-integration/stock-integration.constant';
@@ -49,7 +50,7 @@ export class StockIntegrationService {
     this.logger.log('Integrate dividend transactions');
     this.integrateDividends(
       stockData.filter((transaction) =>
-        ['Dividend (Ordinary)', 'Dividend (Property income)'].includes(transaction.action),
+        ['Dividend (Ordinary)', 'Dividend (Property income)', 'Dividend (Bonus)'].includes(transaction.action),
       ),
     );
   }

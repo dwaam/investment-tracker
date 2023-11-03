@@ -25,7 +25,10 @@ export class StockIndex {
   })
   category?: StockCategory | null;
 
+  @Column({ name: 'country' })
+  countryCode: string;
+
   @JoinColumn({ name: 'country' })
-  @ManyToOne(() => CountryTax, (country) => country.country, { cascade: ['insert', 'update'], nullable: true })
+  @ManyToOne(() => CountryTax, (country) => country.country, { nullable: true })
   country?: CountryTax;
 }

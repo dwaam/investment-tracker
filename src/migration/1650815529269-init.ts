@@ -17,7 +17,7 @@ export class init1650815529269 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE "stock_transactions" ("id" character varying NOT NULL, "date" date NOT NULL, "action" "public"."stock_transactions_action_enum" NOT NULL, "number_of_shares" double precision NOT NULL, "price_per_share" double precision NOT NULL, "exchange_rate" double precision NOT NULL, "total_in_euro" double precision NOT NULL, "currency_conversion_fee" double precision NOT NULL, "index_id" character varying, CONSTRAINT "PK_1aa2430f5ac950c26da6e1ff222" PRIMARY KEY ("id"))`,
     );
-    await queryRunner.query(`CREATE TYPE "public"."stock_dividends_type_enum" AS ENUM('ORDINARY', 'PROPERTY_INCOME')`);
+    await queryRunner.query(`CREATE TYPE "public"."stock_dividends_type_enum" AS ENUM('ORDINARY', 'PROPERTY_INCOME', 'BONUS)`);
     await queryRunner.query(
       `CREATE TABLE "stock_dividends" ("date" date NOT NULL, "type" "public"."stock_dividends_type_enum" NOT NULL, "number_of_shares" double precision NOT NULL, "price_per_share" double precision NOT NULL, "total_in_euro" double precision NOT NULL, "withholding_tax" double precision NOT NULL, "index_id" character varying NOT NULL, CONSTRAINT "PK_cd3934a056132635497ef290594" PRIMARY KEY ("date", "number_of_shares", "price_per_share", "index_id"))`,
     );

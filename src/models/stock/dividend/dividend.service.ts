@@ -34,13 +34,7 @@ export class DividendService {
 
     const totalNet = _.chain(listOfDividend).sumBy('totalInEuro').round(2);
 
-    const totalBrut =
-      'FR' === country.country
-        ? _.chain(listOfDividend)
-            .sumBy('totalInEuro')
-            .round(2)
-            .add(_.chain(listOfDividend).sumBy('withholdingTax').round(2))
-        : _.round((totalNet * 100) / (100 - country.taxPercentage), 3);
+    const totalBrut = _.round((totalNet * 100) / (100 - country.taxPercentage), 3);
 
     return {
       totalNet,

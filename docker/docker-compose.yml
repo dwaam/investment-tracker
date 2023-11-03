@@ -35,6 +35,6 @@ volumes:
 
 
 
-    POSTGRES_DB: investment-tracker
-    POSTGRES_USER: investment-admin
-    POSTGRES_PASSWORD: 5H!&qSZC$*Ea
+#    POSTGRES_DB: investment-tracker
+#    POSTGRES_USER: investment-admin
+#    POSTGRES_PASSWORD: 5H!&qSZC$*Ea

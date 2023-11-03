@@ -19,6 +19,7 @@ export function convertToStockTransaction(transaction: DataFromTrading212): Stoc
       ticker: transaction.ticker,
       name: transaction.stockName,
       currency: transaction.currency,
+      countryCode: transaction.isin.slice(0, 2),
     },
   };
 }
@@ -33,8 +34,13 @@ function getTypeFromAction(action: string) {
       return DividendTypeEnum.ORDINARY;
     case 'Dividend (Property income)':
       return DividendTypeEnum.PROPERTY_INCOME;
+    case 'Dividend (Property income)':
+      return DividendTypeEnum.PROPERTY_INCOME;
+    case 'Dividend (Bonus)':
+      console.log(action);
+      return DividendTypeEnum.BONUS;
     default:
-      throw new Error('Dividend type unknow')
+      throw new Error('Dividend type unknow');
   }
 }
 
@@ -51,6 +57,7 @@ export function convertToDividend(transaction: DataFromTrading212): Dividend {
       ticker: transaction.ticker,
       name: transaction.stockName,
       currency: transaction.currency,
+      countryCode: transaction.isin.slice(0, 2),
     },
   };
 }
