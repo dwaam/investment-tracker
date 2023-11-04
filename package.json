@@ -31,7 +31,9 @@
     "migration:revert": "npm run typeorm -- -d ./src/config/typeorm.ts migration:revert"
   },
   "dependencies": {
+    "@nestjs/common": "^10.2.8",
     "@nestjs/config": "3.1.1",
+    "@nestjs/jwt": "^10.1.1",
     "@nestjs/platform-express": "10.2.8",
     "@nestjs/typeorm": "10.0.0",
     "class-transformer": "^0.5.1",
