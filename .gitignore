@@ -40,3 +40,6 @@ files
 # Env files
 .env
 /.env
+
+
+.npmrc
