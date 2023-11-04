@@ -30,6 +30,17 @@
 
 ```bash
 $ npm install
+
+# Create local database
+$ cd docker
+$ docker-compose up -d
+
+# Create .env file (copy of dummy)
+$ cp .env.dummy .env
+# Modify .env
+
+# Run migrations to populate database
+$ npm run migration:run
 ```
 
 ## Migration
