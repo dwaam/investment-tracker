@@ -4,8 +4,9 @@ import { StockTransaction } from '@/models/stock/stock-transaction/stock-transac
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { CountryTax } from '@/models/stock/country-tax/country-tax.entity';
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
+import { User } from '@/models/user/user.entity';
 
-export const entities = [CountryTax, StockIndex, StockTransaction, Dividend];
+export const entities = [CountryTax, StockIndex, StockTransaction, Dividend, User];
 
 export const createConfig = () =>
   ({
@@ -16,10 +17,7 @@ export const createConfig = () =>
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     entities,
-    // entities: [__dirname + '/src/**/*.entity.ts', __dirname + '/src/**/*.entity.js'],
-    // migrations: ['src/migration/*{.ts,.js}'],
     cli: {
-      migrationsDir: 'src/migration',
+      migrationsDir: 'src/migrations',
     },
-    // synchronize: true,
   } as TypeOrmModuleOptions);

@@ -7,6 +7,8 @@ import { StockModule } from '@/models/stock/stock.module';
 import { createConfig } from '@/config/database/ormconfig';
 import { StockIndexModule } from '@/models/stock/stock-index/stock-index.module';
 import { CountryTaxModule } from '@/models/stock/country-tax/country-tax.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from '@/models/user/user.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { CountryTaxModule } from '@/models/stock/country-tax/country-tax.module'
     StockIndexModule,
     CountryTaxModule,
     TypeOrmModule.forRoot(createConfig()),
+    AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

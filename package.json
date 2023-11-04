@@ -22,11 +22,21 @@
     "test:e2e": "jest --config jest-e2e.config.ts",
     "typeorm": "node --require tsconfig-paths/register --require ts-node/register ./node_modules/typeorm/cli.js -d ./src/config/database/ormconfig-migration.ts",
     "typeorm:cli": "node --loader ts-node/esm ./node_modules/typeorm/cli.js -d ./src/config/database/ormconfig-migration.ts",
-    "migration-generate": "npm run typeorm:cli -- migration:generate -n"
+    "env:load": "env-cmd",
+    "migration-generate": "npm run typeorm:cli -- migration:generate -d ./src/config/typeorm.ts",
+    "migration:run": "env-cmd npm run typeorm -- migration:run -- -d ./src/config/database/ormconfig-migration.ts",
+    "migration:show": "env-cmd npm run typeorm:cli -- migration:show -- -d ./src/config/database/ormconfig-migration.ts",
+    "migration:generate": "env-cmd npm run typeorm -- migration:generate ./src/migrations/new -- -d ./src/config/database/ormconfig-migration.ts",
+    "migration:create": "npm run typeorm:cli -- migration:create",
+    "migration:revert": "npm run typeorm -- -d ./src/config/typeorm.ts migration:revert"
   },
   "dependencies": {
+    "@nestjs/config": "3.1.1",
+    "@nestjs/platform-express": "10.2.8",
+    "@nestjs/typeorm": "10.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "env-cmd": "^10.1.0",
     "lodash": "^4.17.21",
     "luxon": "^2.5.2",
     "multer": "^1.4.4",
@@ -35,10 +45,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.17",
-    "@nestjs/typeorm": "10.0.0",
-    "@nestjs/platform-express": "10.2.8",
-    "@nestjs/config": "3.1.1"
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.2.1",

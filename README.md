@@ -32,6 +32,21 @@
 $ npm install
 ```
 
+## Migration
+
+```bash
+# generate a migration
+$ npm run migration:generate
+# Then change the name of the generated file
+
+# create a migration (if you want to insert data for example)
+$ npm run migration:create
+# Then change the name of the generated file
+
+#Then to run the migrations
+$ npm run migration:run
+```
+
 ## Running the app
 
 ```bash
