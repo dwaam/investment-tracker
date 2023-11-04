@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 import { UserService } from '@/models/user/user.service';
 import { AccessTokenDto, SignInDto } from '@/auth/auth.interfaces';
@@ -9,8 +10,8 @@ import { User } from '@/models/user/user.entity';
 export class AuthService {
   constructor(private usersService: UserService, private jwtService: JwtService) {}
 
-  validateUser(userName: string, pass: string): User {
-    const user = this.usersService.findOne(userName);
+  async validateUser(userName: string, pass: string): Promise<User> {
+    const user = await this.usersService.findOneByUserName(userName);
 
     if (user && user.password === pass) {
       return user;
@@ -19,8 +20,18 @@ export class AuthService {
     return null;
   }
 
-  login(signInDto: SignInDto): AccessTokenDto {
-    const user = this.usersService.findOne(signInDto.userName);
+  async login(signInDto: SignInDto): Promise<AccessTokenDto> {
+    const user = await this.usersService.findOneByUserName(signInDto.userName);
+
+    if (!user) {
+      throw new UnauthorizedException('Username does not exist');
+    }
+
+    const isValid = await bcrypt.compare(signInDto.password, user.password);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid password');
+    }
 
     const payload = { id: user.id, userName: user.userName };
 

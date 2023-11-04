@@ -37,7 +37,6 @@ function getTypeFromAction(action: string): DividendTypeEnum {
     case 'Dividend (Property income)':
       return DividendTypeEnum.PROPERTY_INCOME;
     case 'Dividend (Bonus)':
-      console.log(action);
       return DividendTypeEnum.BONUS;
     default:
       throw new Error('Dividend type unknow');
