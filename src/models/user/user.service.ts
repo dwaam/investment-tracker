@@ -5,10 +5,11 @@ import { User } from '@/models/user/user.entity';
 import { CreateUserDto } from '@/models/user/user.interfaces';
 import { UserRepository } from '@/models/user/user.repository';
 import { UserAlreadyExistsException } from '@/models/user/user.exception';
+import { UserEncryptionService } from '@/models/user/user-encryption.service';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository, private userEncryptionService: UserEncryptionService) {}
 
   private readonly users: User[] = [
     {
@@ -48,7 +49,14 @@ export class UserService {
       throw new UserAlreadyExistsException();
     }
 
-    return this.userRepository.save(createUserDto);
+    const hashedPassword = await this.userEncryptionService.encryptPassword(createUserDto.password);
+
+    const userWithHashedPassword: CreateUserDto = {
+      ...createUserDto,
+      password: hashedPassword,
+    };
+
+    return this.userRepository.save(userWithHashedPassword);
   }
 
   async isUserNameAlreadyExisting(userName: string): Promise<boolean> {
