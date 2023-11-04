@@ -5,7 +5,7 @@ import { DividendService } from '@/models/stock/dividend/dividend.service';
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { DividendTypeEnum } from '@/models/stock/dividend/dividend.enum';
 
-import { defaultDividend } from '../../../utils/dividend.fake-data';
+import { defaultDividend } from '#/unit/utils/dividend.fake-data';
 
 describe('dividend.service', () => {
   let dividendService: DividendService;

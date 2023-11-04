@@ -6,7 +6,7 @@ import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorato
 
 @CustomRepository(StockTransaction)
 export class StockTransactionRepository extends Repository<StockTransaction> {
-  getInvestedAmountBalance() {
+  async getInvestedAmountBalance() {
     return this.createQueryBuilder('transaction')
       .select('action')
       .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')
@@ -14,7 +14,7 @@ export class StockTransactionRepository extends Repository<StockTransaction> {
       .getRawMany();
   }
 
-  getAmountInvestedByMonth() {
+  async getAmountInvestedByMonth() {
     return this.createQueryBuilder('transaction')
       .select("date_trunc('month', date) AS month")
       .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')

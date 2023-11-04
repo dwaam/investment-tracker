@@ -1,7 +1,7 @@
+import { createReadStream } from 'fs';
+
 import { Injectable } from '@nestjs/common';
 import * as papa from 'papaparse';
-import { createReadStream } from 'fs';
-import * as _ from 'lodash';
 
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
 import { TRADING_212_COLUMN_NAMES } from '@/models/asset/stock-integration/stock-integration.constant';
@@ -12,6 +12,8 @@ import {
 } from '@/models/asset/stock-integration/stock-integration.converter';
 import { DividendService } from '@/models/stock/dividend/dividend.service';
 import { getLoggerFor } from '@/utils/logger.util';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { Dividend } from '@/models/stock/dividend/dividend.entity';
 
 @Injectable()
 export class StockIntegrationService {
@@ -19,7 +21,7 @@ export class StockIntegrationService {
 
   constructor(private stockTransactionService: StockTransactionService, private dividendService: DividendService) {}
 
-  readFile(fileName: string) {
+  readFile(fileName: string): void {
     const parseStream = papa.parse(papa.NODE_STREAM_INPUT, {
       header: true,
       dynamicTyping: true,
@@ -41,7 +43,7 @@ export class StockIntegrationService {
     });
   }
 
-  handleChunkOfData(stockData: DataFromTrading212[]) {
+  handleChunkOfData(stockData: DataFromTrading212[]): void {
     this.logger.log('Integrate common transactions');
     this.integrateCommonTransactions(
       stockData.filter((transaction) => ['Market buy', 'Market sell'].includes(transaction.action)),
@@ -55,13 +57,13 @@ export class StockIntegrationService {
     );
   }
 
-  integrateCommonTransactions(commonTransactions: DataFromTrading212[]) {
+  async integrateCommonTransactions(commonTransactions: DataFromTrading212[]): Promise<StockTransaction[]> {
     const convertedTransactions = convertToStockTransactions(commonTransactions);
 
     return this.stockTransactionService.saveAll(convertedTransactions);
   }
 
-  integrateDividends(commonTransactions: DataFromTrading212[]) {
+  async integrateDividends(commonTransactions: DataFromTrading212[]): Promise<Dividend[]> {
     const convertedTransactions = convertToDividends(commonTransactions);
 
     return this.dividendService.saveAll(convertedTransactions);

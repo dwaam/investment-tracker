@@ -2,10 +2,11 @@ import { when } from 'jest-when';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { convertToStockTransactions } from '@/models/asset/stock-integration/stock-integration.converter';
-import { defaultDataFromTrading212, defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import { StockIntegrationService } from '@/models/asset/stock-integration/stock-integration.service';
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
+
+import { defaultDataFromTrading212, defaultStockTransaction } from '#/unit/utils/stock-transaction.fake-data';
 
 jest.mock('@/models/asset/stock-integration/stock-integration.converter');
 
@@ -55,7 +56,7 @@ describe('Stock integration service', () => {
         .spyOn(stockIntegrationService, 'integrateCommonTransactions')
         .mockResolvedValue([defaultStockTransaction]);
 
-      await stockIntegrationService.handleChunkOfData(transactions);
+      stockIntegrationService.handleChunkOfData(transactions);
 
       expect(integrateCommonTransactionsSpy).toHaveBeenCalledWith([transactions[0], transactions[2]]);
     });

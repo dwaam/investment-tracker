@@ -3,8 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BankAssetService } from '@/models/banking/bank-asset/bank-asset.service';
 import { BankAssetRepository } from '@/models/banking/bank-asset/bank-asset.repository';
 
-import { loggerLogMock } from '../../../setupTest';
-import { defaultCreateBankAsset } from '../../../utils/bank-asset.fake-data';
+import { defaultCreateBankAsset } from '#/unit/utils/bank-asset.fake-data';
+import { loggerLogMock } from '#/unit/setupTest';
 
 describe('bank-asset.service', () => {
   let bankAssetService: BankAssetService;

@@ -8,7 +8,7 @@ export class StockTransactionController {
   constructor(private stockTransactionService: StockTransactionService) {}
 
   @Post()
-  createOne(@Body() stockTransaction: StockTransaction) {
+  async createOne(@Body() stockTransaction: StockTransaction): Promise<StockTransaction> {
     return this.stockTransactionService.saveOne(stockTransaction);
   }
 }

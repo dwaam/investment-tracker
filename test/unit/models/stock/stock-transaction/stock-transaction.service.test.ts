@@ -8,8 +8,8 @@ import { InvestedAmountsByMonthRaw, StockBalance } from '@/models/stock/stock.in
 import { StockTransactionRepository } from '@/models/stock/stock-transaction/stock-transaction.repository';
 import { convertToInvestedAmountsByMonth } from '@/models/stock/stock-transaction/stock-transaction.mapper';
 
-import { defaultInvestedAmountsByMonth, defaultStockTransaction } from '../../../utils/stock-transaction.fake-data';
-import { loggerLogMock } from '../../../setupTest';
+import { defaultInvestedAmountsByMonth, defaultStockTransaction } from '#/unit/utils/stock-transaction.fake-data';
+import { loggerLogMock } from '#/unit/setupTest';
 
 jest.mock('@/models/stock/stock-transaction/stock-transaction.mapper');
 

@@ -6,10 +6,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es2022",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -18,10 +18,16 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@/*": ["*"],
+      "@/*": ["src/*"],
+      "#/*": ["test/*"],
     },
   },
   "watchOptions": {
     "excludeFiles": ["files"]
-  }
+  },
+  "include": [
+    ".eslintrc.js",
+    "**/*.js",
+    "**/*.ts"
+  ]
 }

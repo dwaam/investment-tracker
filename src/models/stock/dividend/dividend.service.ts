@@ -3,24 +3,26 @@ import * as _ from 'lodash';
 
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { DividendRepository } from '@/models/stock/dividend/dividend.repository';
+import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
+import { SummaryForDividendsFromSameCountry, TaxForm } from '@/models/stock/dividend/dividend.interfaces';
 
 @Injectable()
 export class DividendService {
   constructor(private dividendRepository: DividendRepository) {}
 
-  saveAll(dividends: Dividend[]) {
+  async saveAll(dividends: Dividend[]): Promise<Dividend[]> {
     return this.dividendRepository.save(dividends);
   }
 
-  getDividendByMonth() {
+  async getDividendByMonth(): Promise<InvestedAmountsByMonthRaw[]> {
     return this.dividendRepository.getDividendByMonth();
   }
 
-  getDividendPerYear(year: number) {
+  async getDividendPerYear(year: number): Promise<Dividend[]> {
     return this.dividendRepository.getDividendsPerYear(year);
   }
 
-  async getDividendPerYearByCountry(year: number) {
+  async getDividendPerYearByCountry(year: number): Promise<Dividend[]> {
     const dividends: Dividend[] = await this.dividendRepository.getDividendsPerYear(year);
 
     return _.chain(dividends)
@@ -29,7 +31,7 @@ export class DividendService {
       .value();
   }
 
-  private getSummaryForDividendsFromSameCountry(listOfDividend: Dividend[]) {
+  private getSummaryForDividendsFromSameCountry(listOfDividend: Dividend[]): SummaryForDividendsFromSameCountry {
     const country = listOfDividend[0].index.country;
 
     const totalNet = _.chain(listOfDividend).sumBy('totalInEuro').round(2);
@@ -44,7 +46,7 @@ export class DividendService {
     };
   }
 
-  async getTaxFormInputForYear(year: number) {
+  async getTaxFormInputForYear(year: number): Promise<TaxForm[]> {
     const dividendsPerCountry = await this.getDividendPerYearByCountry(year);
 
     // Calculate 2DC value
@@ -55,7 +57,7 @@ export class DividendService {
 
     const frenchDividends = dividendsPerCountry['FR'];
 
-    const form = [
+    const form: TaxForm[] = [
       {
         formNumber: 2042,
         fields: [

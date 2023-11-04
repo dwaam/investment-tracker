@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
 import { createConfig, entities } from '@/config/database/ormconfig';
 
 describe('ormconfig', () => {
@@ -32,9 +33,6 @@ describe('ormconfig', () => {
         password,
         database: databaseName,
         entities,
-        cli: {
-          migrationsDir: 'src/migration',
-        },
       };
 
       expect(createConfig()).toEqual(expectedConfig);

@@ -3,3 +3,7 @@ export interface SignInDto {
 
   password: string;
 }
+
+export interface AccessTokenDto {
+  access_token: string;
+}

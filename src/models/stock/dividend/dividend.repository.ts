@@ -7,7 +7,7 @@ import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorato
 
 @CustomRepository(Dividend)
 export class DividendRepository extends Repository<Dividend> {
-  getDividendByMonth() {
+  async getDividendByMonth(): Promise<InvestedAmountsByMonthRaw[]> {
     return this.createQueryBuilder('dividend')
       .select("date_trunc('month', date) AS month")
       .addSelect('SUM(total_in_euro::NUMERIC)', 'amount')
@@ -15,7 +15,7 @@ export class DividendRepository extends Repository<Dividend> {
       .getRawMany<InvestedAmountsByMonthRaw>();
   }
 
-  getDividendsPerYear(year: number) {
+  async getDividendsPerYear(year: number): Promise<Dividend[]> {
     const beginDate = DateTime.fromISO(`${year}-01-01`);
     const endDate = DateTime.fromISO(`${year}-12-31`);
 

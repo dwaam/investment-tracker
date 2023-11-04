@@ -1,7 +1,7 @@
 import { convertToInvestedAmountsByMonth } from '@/models/stock/stock-transaction/stock-transaction.mapper';
-
-import { defaultInvestedAmountsByMonth } from '../../../utils/stock-transaction.fake-data';
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
+
+import { defaultInvestedAmountsByMonth } from '#/unit/utils/stock-transaction.fake-data';
 
 describe('stock-transaction.mapper', () => {
   describe('convertToInvestedAmountsByMonth', () => {

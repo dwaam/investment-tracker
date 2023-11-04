@@ -4,7 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { StockIndexService } from '@/models/stock/stock-index/stock-index.service';
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 
-import { defaultStockIndex, defaultStockIndexDto } from '../../../utils/stock-index.fake-data';
+import { defaultStockIndex, defaultStockIndexDto } from '#/unit/utils/stock-index.fake-data';
 
 describe('stock-index.service', () => {
   let stockIndexService: StockIndexService;

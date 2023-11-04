@@ -1,7 +1,8 @@
 import { Min, Max, IsOptional, IsNotEmpty, IsNumber, IsString, ValidateNested, IsEnum } from 'class-validator';
+import { Type } from 'class-transformer';
+
 import { UpdateBankDto } from '@/models/banking/dto/update-bank.dto';
 import { CreateBankDto } from '@/models/banking/dto/create-bank.dto';
-import { Type } from 'class-transformer';
 import { BankAssetTypeEnum } from '@/models/banking/bank-asset/bank-asset.enum';
 
 export class CreateBankAssetDto {

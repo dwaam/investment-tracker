@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
-import { StockModule } from '@/models/stock/stock.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { INestApplication } from '@nestjs/common';
 
+import { StockModule } from '@/models/stock/stock.module';
 import { StockTransactionRepository } from '@/models/stock/stock-transaction/stock-transaction.repository';
 
-import { config } from '../../../ormconfig-e2e';
+import { config } from '#/e2e/ormconfig-e2e';
 
 describe('stock-transaction.repository', () => {
   let app: INestApplication;

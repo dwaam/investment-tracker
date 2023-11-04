@@ -19,7 +19,7 @@ export class AssetController {
       }),
     }),
   )
-  uploadFile(@Param() params) {
+  uploadFile(@Param() params): void {
     return this.stockIntegrationService.readFile(`files/${params.filename}`);
   }
 }

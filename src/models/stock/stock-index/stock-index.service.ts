@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { UpdateStockIndexDto } from '@/models/stock/stock-index/dto/update-stock-index.dto';
@@ -16,7 +16,7 @@ export class StockIndexService {
     return this.stockIndexRepository.find();
   }
 
-  async update(updateStockIndexDto: UpdateStockIndexDto) {
+  async update(updateStockIndexDto: UpdateStockIndexDto): Promise<UpdateResult> {
     return this.stockIndexRepository.update(updateStockIndexDto.id, updateStockIndexDto);
   }
 }

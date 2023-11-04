@@ -28,7 +28,7 @@ export function convertToStockTransactions(transactions: DataFromTrading212[]): 
   return transactions.map((transaction) => convertToStockTransaction(transaction));
 }
 
-function getTypeFromAction(action: string) {
+function getTypeFromAction(action: string): DividendTypeEnum {
   switch (action) {
     case 'Dividend (Ordinary)':
       return DividendTypeEnum.ORDINARY;

@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 
-import { entities } from './ormconfig';
+import { entities } from '@/config/database/ormconfig';
 
 const dataSource = new DataSource({
   type: 'postgres',

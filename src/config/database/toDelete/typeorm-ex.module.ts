@@ -1,10 +1,10 @@
 import { DynamicModule, Provider } from '@nestjs/common';
 import { getDataSourceToken } from '@nestjs/typeorm';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable */
 // @ts-ignore
 import { DataSource } from 'typeorm';
 
-import { TYPEORM_EX_CUSTOM_REPOSITORY } from './typeorm-ex.decorator';
+import { TYPEORM_EX_CUSTOM_REPOSITORY } from '@/config/database/toDelete/typeorm-ex.decorator';
 
 export class TypeOrmExModule {
   public static forCustomRepository<T extends new (...args: any[]) => any>(repositories: T[]): DynamicModule {

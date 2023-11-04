@@ -8,6 +8,7 @@ module.exports = {
   coveragePathIgnorePatterns: ['.module.ts', '<rootDir>/src/migration', '<rootDir>/src/app/main.ts'],
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
+    '#/(.*)': '<rootDir>/test/$1',
   },
   coverageDirectory: '../coverage',
   testEnvironment: 'node',

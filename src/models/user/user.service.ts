@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@/models/user/user.entity';
 import { plainToInstance } from 'class-transformer';
+
+import { User } from '@/models/user/user.entity';
 
 @Injectable()
 export class UserService {
@@ -17,11 +18,11 @@ export class UserService {
     },
   ];
 
-  async findOne(username: string): Promise<User | undefined> {
+  findOne(username: string): User | undefined {
     return this.users.find((user) => user.username === username);
   }
 
-  async findOneByIdOrThrow(id: string): Promise<User | undefined> {
+  findOneByIdOrThrow(id: string): User | undefined {
     const user = this.users.find((user) => user.id === id);
 
     if (user) {
