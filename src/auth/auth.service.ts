@@ -9,8 +9,8 @@ import { User } from '@/models/user/user.entity';
 export class AuthService {
   constructor(private usersService: UserService, private jwtService: JwtService) {}
 
-  validateUser(username: string, pass: string): User {
-    const user = this.usersService.findOne(username);
+  validateUser(userName: string, pass: string): User {
+    const user = this.usersService.findOne(userName);
 
     if (user && user.password === pass) {
       return user;
@@ -20,9 +20,9 @@ export class AuthService {
   }
 
   login(signInDto: SignInDto): AccessTokenDto {
-    const user = this.usersService.findOne(signInDto.username);
+    const user = this.usersService.findOne(signInDto.userName);
 
-    const payload = { id: user.id, username: user.username };
+    const payload = { id: user.id, userName: user.userName };
 
     return {
       access_token: this.jwtService.sign(payload),

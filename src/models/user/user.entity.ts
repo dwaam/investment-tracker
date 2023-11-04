@@ -1,15 +1,26 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 
 @Entity('user')
 export class User {
-  @PrimaryColumn({ name: 'country', type: 'uuid', generated: 'uuid' })
+  @PrimaryColumn({ name: 'id', type: 'uuid', generated: 'uuid' })
   id: string;
 
-  @Column({ name: 'username', type: 'text' })
-  username: string;
+  @IsString()
+  @MinLength(5)
+  @MaxLength(50)
+  @Column({ name: 'user_name', type: 'text', nullable: false, unique: true })
+  userName: string;
 
-  @Exclude()
-  @Column({ name: 'password', type: 'text' })
+  @IsString()
+  @Column({ name: 'first_name', type: 'text', nullable: false })
+  firstName: string;
+
+  @IsString()
+  @Column({ name: 'last_name', type: 'text', nullable: false })
+  lastName: string;
+
+  @IsString()
+  @Column({ name: 'password', type: 'text', nullable: false })
   password: string;
 }

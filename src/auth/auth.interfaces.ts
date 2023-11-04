@@ -1,5 +1,5 @@
 export interface SignInDto {
-  username: string;
+  userName: string;
 
   password: string;
 }
