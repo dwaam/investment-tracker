@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { IsString, MaxLength, MinLength } from 'class-validator';
+import { Exclude } from 'class-transformer';
 
 @Entity('user')
 export class User {
@@ -20,7 +21,7 @@ export class User {
   @Column({ name: 'last_name', type: 'text', nullable: false })
   lastName: string;
 
-  @IsString()
+  @Exclude()
   @Column({ name: 'password', type: 'text', nullable: false })
   password: string;
 }
