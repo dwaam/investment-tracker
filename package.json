@@ -25,9 +25,9 @@
     "env:load": "env-cmd",
     "migration-generate": "npm run typeorm:cli -- migration:generate -d ./src/config/typeorm.ts",
     "migration:run": "env-cmd npm run typeorm -- migration:run -- -d ./src/config/database/ormconfig-migration.ts",
+    "migration:create": "env-cmd npm run typeorm -- migration:create migration-name",
     "migration:show": "env-cmd npm run typeorm:cli -- migration:show -- -d ./src/config/database/ormconfig-migration.ts",
     "migration:generate": "env-cmd npm run typeorm -- migration:generate ./src/migrations/new -- -d ./src/config/database/ormconfig-migration.ts",
-    "migration:create": "npm run typeorm:cli -- migration:create",
     "migration:revert": "npm run typeorm -- -d ./src/config/typeorm.ts migration:revert"
   },
   "dependencies": {
