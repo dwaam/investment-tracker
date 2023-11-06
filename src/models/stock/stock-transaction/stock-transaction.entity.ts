@@ -5,8 +5,14 @@ import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-tran
 
 @Entity('stock_transactions')
 export class StockTransaction {
-  @PrimaryColumn({ name: 'id', type: 'varchar' })
+  @PrimaryColumn({ name: 'id', type: 'bigint', generated: 'increment' })
   id: string;
+
+  @Column({ name: 'transaction_id', type: 'text' })
+  transactionId: string;
+
+  @Column({ name: 'stock_id', type: 'uuid' })
+  stockId: string;
 
   @Column({ name: 'date', type: 'date' })
   date: Date;
@@ -36,5 +42,5 @@ export class StockTransaction {
 
   @JoinColumn({ name: 'index_id' })
   @ManyToOne(() => StockIndex, (index) => index.id, { cascade: ['insert', 'update'] })
-  index: StockIndex;
+  index?: StockIndex;
 }

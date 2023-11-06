@@ -20,7 +20,7 @@ export class DividendController {
   }
 
   @Get('/per-year-by-countries/:year')
-  async getDividendPerYearByCountries(@Param('year') year: number): Promise<Dividend[]> {
+  async getDividendPerYearByCountries(@Param('year') year: number) {
     return this.dividendService.getDividendPerYearByCountry(year);
   }
 

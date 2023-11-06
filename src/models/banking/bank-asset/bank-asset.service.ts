@@ -12,7 +12,7 @@ export class BankAssetService {
   constructor(private bankAssetRepository: BankAssetRepository) {}
 
   async saveOne(bankAsset: CreateBankAssetDto): Promise<BankAsset> {
-    this.logger.log(`Save new bank asset named: ${bankAsset.name}`);
+    this.logger.info(`Save new bank asset named: ${bankAsset.name}`);
 
     return this.bankAssetRepository.save(bankAsset);
   }

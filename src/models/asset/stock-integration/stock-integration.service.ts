@@ -8,20 +8,26 @@ import { TRADING_212_COLUMN_NAMES } from '@/models/asset/stock-integration/stock
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import {
   convertToDividends,
+  convertToStockIndices,
   convertToStockTransactions,
 } from '@/models/asset/stock-integration/stock-integration.converter';
 import { DividendService } from '@/models/stock/dividend/dividend.service';
 import { getLoggerFor } from '@/utils/logger.util';
-import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
-import { Dividend } from '@/models/stock/dividend/dividend.entity';
+import { StockIndexService } from '@/models/stock/stock-index/stock-index.service';
 
 @Injectable()
 export class StockIntegrationService {
-  private readonly logger = getLoggerFor('StockIntegrationService');
+  private readonly logger = getLoggerFor(StockIntegrationService.name);
 
-  constructor(private stockTransactionService: StockTransactionService, private dividendService: DividendService) {}
+  constructor(
+    private stockTransactionService: StockTransactionService,
+    private dividendService: DividendService,
+    private stockIndexService: StockIndexService,
+  ) {}
 
   readFile(fileName: string): void {
+    this.logger.info(`Reading file with name "${fileName}".`);
+
     const parseStream = papa.parse(papa.NODE_STREAM_INPUT, {
       header: true,
       dynamicTyping: true,
@@ -38,34 +44,47 @@ export class StockIntegrationService {
       data.push(chunk);
     });
 
-    parseStream.on('finish', () => {
-      this.handleChunkOfData(data);
+    parseStream.on('finish', async () => {
+      return this.handleChunkOfData(data);
     });
   }
 
-  handleChunkOfData(stockData: DataFromTrading212[]): void {
-    this.logger.log('Integrate common transactions');
-    this.integrateCommonTransactions(
-      stockData.filter((transaction) => ['Market buy', 'Market sell'].includes(transaction.action)),
+  async handleChunkOfData(stockData: DataFromTrading212[]): Promise<void> {
+    const commonTransactions = stockData.filter((transaction) =>
+      ['Market buy', 'Market sell'].includes(transaction.action),
+    );
+    const dividendTransactions = stockData.filter((transaction) =>
+      ['Dividend (Ordinary)', 'Dividend (Property income)', 'Dividend (Bonus)'].includes(transaction.action),
     );
 
-    this.logger.log('Integrate dividend transactions');
-    this.integrateDividends(
-      stockData.filter((transaction) =>
-        ['Dividend (Ordinary)', 'Dividend (Property income)', 'Dividend (Bonus)'].includes(transaction.action),
-      ),
-    );
+    await this.integrateStockIndices([...commonTransactions, ...dividendTransactions]);
+
+    await this.integrateCommonTransactions(commonTransactions);
+
+    await this.integrateDividends(dividendTransactions);
   }
 
-  async integrateCommonTransactions(commonTransactions: DataFromTrading212[]): Promise<StockTransaction[]> {
+  async integrateStockIndices(transactions: DataFromTrading212[]): Promise<void> {
+    this.logger.info(`Integrate stock indices from ${transactions.length} transactions.`);
+
+    const convertedTransactions = convertToStockIndices(transactions);
+
+    return this.stockIndexService.upsertMany(convertedTransactions);
+  }
+
+  async integrateCommonTransactions(commonTransactions: DataFromTrading212[]): Promise<void> {
+    this.logger.info(`Integrate common transactions from ${commonTransactions.length} transactions.`);
+
     const convertedTransactions = convertToStockTransactions(commonTransactions);
 
-    return this.stockTransactionService.saveAll(convertedTransactions);
+    return this.stockTransactionService.upsertMany(convertedTransactions);
   }
 
-  async integrateDividends(commonTransactions: DataFromTrading212[]): Promise<Dividend[]> {
-    const convertedTransactions = convertToDividends(commonTransactions);
+  async integrateDividends(dividendTransactions: DataFromTrading212[]): Promise<void> {
+    this.logger.info(`Integrate dividends from ${dividendTransactions.length} transactions.`);
 
-    return this.dividendService.saveAll(convertedTransactions);
+    const convertedTransactions = convertToDividends(dividendTransactions);
+
+    return this.dividendService.upsertMany(convertedTransactions);
   }
 }
