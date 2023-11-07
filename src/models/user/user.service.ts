@@ -19,7 +19,7 @@ export class UserService {
   }
 
   async findOneByIdOrThrow(id: string): Promise<User> {
-    this.logger.log(`Find user with id "${id}"`);
+    this.logger.info(`Find user with id "${id}"`);
 
     return this.userRepository.findOneByOrFail({ id });
   }

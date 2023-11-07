@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { CustomRepository } from '@/config/database/toDelete/typeorm-ex.decorator';
+import { UpsertDividend } from '@/models/stock/dividend/dividend.interfaces';
 
 @CustomRepository(Dividend)
 export class DividendRepository extends Repository<Dividend> {
@@ -29,5 +30,9 @@ export class DividendRepository extends Repository<Dividend> {
         date: Between(beginDate, endDate),
       },
     });
+  }
+
+  async upsertMany(upsertDividends: UpsertDividend[]): Promise<void> {
+    await this.createQueryBuilder().insert().into(Dividend).values(upsertDividends).orIgnore().execute();
   }
 }

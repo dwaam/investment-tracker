@@ -1,12 +1,19 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
 
 @Entity('stock_transactions')
 export class StockTransaction {
-  @PrimaryColumn({ name: 'id', type: 'varchar' })
+  @PrimaryColumn({ name: 'id', type: 'bigint', generated: 'increment' })
   id: string;
+
+  @Index({ unique: true })
+  @Column({ name: 'transaction_id', type: 'text' })
+  transactionId: string;
+
+  @Column({ name: 'stock_id', type: 'text' })
+  stockId: string;
 
   @Column({ name: 'date', type: 'date' })
   date: Date;
@@ -36,5 +43,5 @@ export class StockTransaction {
 
   @JoinColumn({ name: 'index_id' })
   @ManyToOne(() => StockIndex, (index) => index.id, { cascade: ['insert', 'update'] })
-  index: StockIndex;
+  index?: StockIndex;
 }

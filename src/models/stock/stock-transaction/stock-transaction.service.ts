@@ -5,12 +5,15 @@ import { StockTransactionRepository } from '@/models/stock/stock-transaction/sto
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { getLoggerFor } from '@/utils/logger.util';
 import { convertToInvestedAmountsByMonth } from '@/models/stock/stock-transaction/stock-transaction.mapper';
-import { InvestedAmountBalance } from '@/models/stock/stock-transaction/stock-transaction.interfaces';
+import {
+  InvestedAmountBalance,
+  UpsertStockTransaction,
+} from '@/models/stock/stock-transaction/stock-transaction.interfaces';
 import { InvestedAmountsByMonth } from '@/models/stock/stock.interface';
 
 @Injectable()
 export class StockTransactionService {
-  private readonly logger = getLoggerFor('StockTransactionService');
+  private readonly logger = getLoggerFor(StockTransactionService.name);
 
   constructor(private stockTransactionRepository: StockTransactionRepository) {}
 
@@ -23,7 +26,8 @@ export class StockTransactionService {
   }
 
   async getInvestedAmountBalance(): Promise<InvestedAmountBalance> {
-    this.logger.log('Get invested amount balance');
+    this.logger.info('Get invested amount balance.');
+
     const sumsByType = await this.stockTransactionRepository.getInvestedAmountBalance();
 
     return {
@@ -33,7 +37,14 @@ export class StockTransactionService {
   }
 
   async getInvestedAmountsByMonth(): Promise<InvestedAmountsByMonth[]> {
-    this.logger.log('Get invested amounts by month');
+    this.logger.info('Get invested amounts by month.');
+
     return convertToInvestedAmountsByMonth(await this.stockTransactionRepository.getAmountInvestedByMonth());
+  }
+
+  async upsertMany(updateStockTransactions: UpsertStockTransaction[]): Promise<void> {
+    this.logger.info(`Upserting ${updateStockTransactions.length} stock transactions.`);
+
+    return this.stockTransactionRepository.upsertMany(updateStockTransactions);
   }
 }

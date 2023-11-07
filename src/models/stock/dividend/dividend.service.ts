@@ -1,17 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import * as _ from 'lodash';
+import { chain, forOwn, round } from 'lodash';
+import { Dictionary } from 'express-serve-static-core';
 
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { DividendRepository } from '@/models/stock/dividend/dividend.repository';
 import { InvestedAmountsByMonthRaw } from '@/models/stock/stock.interface';
-import { SummaryForDividendsFromSameCountry, TaxForm } from '@/models/stock/dividend/dividend.interfaces';
+import {
+  SummaryForDividendsFromSameCountry,
+  TaxForm,
+  UpsertDividend,
+} from '@/models/stock/dividend/dividend.interfaces';
+import { getLoggerFor } from '@/utils/logger.util';
 
 @Injectable()
 export class DividendService {
+  private readonly logger = getLoggerFor(DividendService.name);
+
   constructor(private dividendRepository: DividendRepository) {}
 
   async saveAll(dividends: Dividend[]): Promise<Dividend[]> {
+    this.logger.info(`Saving ${dividends.length} dividends.`);
+
     return this.dividendRepository.save(dividends);
+  }
+
+  async upsertMany(dividends: UpsertDividend[]): Promise<void> {
+    this.logger.info(`Upserting ${dividends.length} dividends.`);
+
+    return this.dividendRepository.upsertMany(dividends);
   }
 
   async getDividendByMonth(): Promise<InvestedAmountsByMonthRaw[]> {
@@ -22,10 +38,10 @@ export class DividendService {
     return this.dividendRepository.getDividendsPerYear(year);
   }
 
-  async getDividendPerYearByCountry(year: number): Promise<Dividend[]> {
+  async getDividendPerYearByCountry(year: number): Promise<Dictionary<SummaryForDividendsFromSameCountry>> {
     const dividends: Dividend[] = await this.dividendRepository.getDividendsPerYear(year);
 
-    return _.chain(dividends)
+    return chain(dividends)
       .groupBy('index.country.country')
       .mapValues((listOfDividend) => this.getSummaryForDividendsFromSameCountry(listOfDividend))
       .value();
@@ -34,14 +50,14 @@ export class DividendService {
   private getSummaryForDividendsFromSameCountry(listOfDividend: Dividend[]): SummaryForDividendsFromSameCountry {
     const country = listOfDividend[0].index.country;
 
-    const totalNet = _.chain(listOfDividend).sumBy('totalInEuro').round(2);
+    const totalNet = chain(listOfDividend).sumBy('totalInEuro').round(2).value();
 
-    const totalBrut = _.round((totalNet * 100) / (100 - country.taxPercentage), 3);
+    const totalBrut = round((totalNet * 100) / (100 - country.taxPercentage), 3);
 
     return {
       totalNet,
       totalBrut,
-      payAsYouEarn: _.round(totalBrut - totalNet, 2),
+      payAsYouEarn: round(totalBrut - totalNet, 2),
       taxRateToApply: country.taxRateToApply,
     };
   }
@@ -51,7 +67,7 @@ export class DividendService {
 
     // Calculate 2DC value
     let sumOfBrut = 0;
-    _.forOwn(dividendsPerCountry, (countrySummary) => {
+    forOwn(dividendsPerCountry, (countrySummary) => {
       sumOfBrut += countrySummary.totalBrut;
     });
 
@@ -64,17 +80,17 @@ export class DividendService {
           {
             field: '2DC',
             comment: 'REVENUS DES ACTIONS ET PARTS',
-            value: _.round(sumOfBrut, 2),
+            value: round(sumOfBrut, 2),
           },
           {
             field: '2CG',
             comment: `REVENUS D'ACTIONS FRANCAISES`,
-            value: _.round(frenchDividends?.totalBrut, 2) || 0,
+            value: round(frenchDividends?.totalBrut, 2) || 0,
           },
           {
             field: '2CK',
             comment: `IMPOTS DEJA PAYE SUR ACTIONS FRANCAISES`,
-            value: frenchDividends ? _.round((frenchDividends.totalBrut * 12.8) / 100, 2) : 0,
+            value: frenchDividends ? round((frenchDividends.totalBrut * 12.8) / 100, 2) : 0,
           },
         ],
       },

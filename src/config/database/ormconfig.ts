@@ -20,4 +20,5 @@ export const createConfig = () =>
     cli: {
       migrationsDir: 'src/migrations',
     },
+    logging: ['error'],
   } as TypeOrmModuleOptions);

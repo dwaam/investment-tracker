@@ -1,12 +1,16 @@
-import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
+import { isEqual, uniqBy } from 'lodash';
+
 import { TRANSACTION_TYPE_LINK } from '@/models/asset/stock-integration/stock-integration.constant';
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
-import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { DividendTypeEnum } from '@/models/stock/dividend/dividend.enum';
+import { StockAccountEnum } from '@/models/stock/stock.enum';
+import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
+import { UpsertStockTransaction } from '@/models/stock/stock-transaction/stock-transaction.interfaces';
+import { UpsertDividend } from '@/models/stock/dividend/dividend.interfaces';
 
-export function convertToStockTransaction(transaction: DataFromTrading212): StockTransaction {
+export function convertToStockTransaction(transaction: DataFromTrading212): UpsertStockTransaction {
   return {
-    id: transaction.transactionId,
+    transactionId: transaction.transactionId,
     action: TRANSACTION_TYPE_LINK[transaction.action],
     currencyConversionFee: +transaction.currencyConversionFeeInEuro,
     date: new Date(transaction.date),
@@ -14,17 +18,11 @@ export function convertToStockTransaction(transaction: DataFromTrading212): Stoc
     numberOfShares: +transaction.numberOfShares,
     pricePerShare: +transaction.pricePerShare,
     totalInEuro: +transaction.total,
-    index: {
-      id: transaction.isin,
-      ticker: transaction.ticker,
-      name: transaction.stockName,
-      currency: transaction.currency,
-      countryCode: transaction.isin.slice(0, 2),
-    },
+    stockId: transaction.isin,
   };
 }
 
-export function convertToStockTransactions(transactions: DataFromTrading212[]): StockTransaction[] {
+export function convertToStockTransactions(transactions: DataFromTrading212[]): UpsertStockTransaction[] {
   return transactions.map((transaction) => convertToStockTransaction(transaction));
 }
 
@@ -43,7 +41,7 @@ function getTypeFromAction(action: string): DividendTypeEnum {
   }
 }
 
-export function convertToDividend(transaction: DataFromTrading212): Dividend {
+export function convertToUpsertDividend(transaction: DataFromTrading212): UpsertDividend {
   return {
     date: new Date(transaction.date),
     numberOfShares: +transaction.numberOfShares,
@@ -51,16 +49,26 @@ export function convertToDividend(transaction: DataFromTrading212): Dividend {
     totalInEuro: +transaction.total,
     type: getTypeFromAction(transaction.action),
     withholdingTax: +transaction.withholdingTax,
-    index: {
-      id: transaction.isin,
-      ticker: transaction.ticker,
-      name: transaction.stockName,
-      currency: transaction.currency,
-      countryCode: transaction.isin.slice(0, 2),
-    },
+    account: StockAccountEnum.TRADING_212,
+    stockId: transaction.isin,
   };
 }
 
-export function convertToDividends(transactions: DataFromTrading212[]): Dividend[] {
-  return transactions.map((transaction) => convertToDividend(transaction));
+export function convertToDividends(transactions: DataFromTrading212[]): UpsertDividend[] {
+  return transactions.map((transaction) => convertToUpsertDividend(transaction));
+}
+
+export function convertToStockIndices(transactions: DataFromTrading212[]): StockIndex[] {
+  return uniqBy(
+    transactions.map((transaction) => {
+      return {
+        id: transaction.isin,
+        ticker: transaction.ticker,
+        name: transaction.stockName,
+        currency: transaction.currency,
+        countryCode: transaction.isin.slice(0, 2),
+      };
+    }),
+    isEqual,
+  );
 }
