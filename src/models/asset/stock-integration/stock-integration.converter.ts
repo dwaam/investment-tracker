@@ -1,4 +1,4 @@
-import { isEqual, uniqBy } from 'lodash';
+import { isEqual, uniqBy, uniqWith } from 'lodash';
 
 import { TRANSACTION_TYPE_LINK } from '@/models/asset/stock-integration/stock-integration.constant';
 import { DataFromTrading212 } from '@/models/asset/asset.interface';
@@ -59,16 +59,15 @@ export function convertToDividends(transactions: DataFromTrading212[]): UpsertDi
 }
 
 export function convertToStockIndices(transactions: DataFromTrading212[]): StockIndex[] {
-  return uniqBy(
-    transactions.map((transaction) => {
-      return {
-        id: transaction.isin,
-        ticker: transaction.ticker,
-        name: transaction.stockName,
-        currency: transaction.currency,
-        countryCode: transaction.isin.slice(0, 2),
-      };
-    }),
-    isEqual,
-  );
+  const indices = transactions.map((transaction) => {
+    return {
+      id: transaction.isin,
+      ticker: transaction.ticker,
+      name: transaction.stockName,
+      currency: transaction.currency,
+      countryCode: transaction.isin.slice(0, 2),
+    };
+  });
+
+  return uniqWith(indices, isEqual);
 }

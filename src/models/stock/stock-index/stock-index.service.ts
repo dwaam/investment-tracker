@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateResult } from 'typeorm';
+import { chunk, uniq } from 'lodash';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { UpdateStockIndexDto } from '@/models/stock/stock-index/dto/update-stock-index.dto';
