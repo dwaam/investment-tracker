@@ -13,25 +13,26 @@ services:
     volumes:
       - investment-tracker-pgdump:/var/lib/postgresql/dump
       - investment-tracker-pgdata:/var/lib/postgresql/data
-  integration-testing:
-    image: postgres:alpine
-    shm_size: 8g
-    ports:
-      - 56432:5432
-    command: postgres -c 'max_connections=120'
-    environment:
-      POSTGRES_DB: investment-tracker
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: "admin-integration"
-    volumes:
-      - investment-tracker-e2e-pgdump:/var/lib/postgresql/dump
-      - investment-tracker-e2e-pgdata:/var/lib/postgresql/data
+
+#  integration-testing:
+#    image: postgres:alpine
+#    shm_size: 8g
+#    ports:
+#      - 56432:5432
+#    command: postgres -c 'max_connections=120'
+#    environment:
+#      POSTGRES_DB: investment-tracker
+#      POSTGRES_USER: admin
+#      POSTGRES_PASSWORD: "admin-integration"
+#    volumes:
+#      - investment-tracker-e2e-pgdump:/var/lib/postgresql/dump
+#      - investment-tracker-e2e-pgdata:/var/lib/postgresql/data
 
 volumes:
   investment-tracker-pgdump:
   investment-tracker-pgdata:
-  investment-tracker-e2e-pgdump:
-  investment-tracker-e2e-pgdata:
+#  investment-tracker-e2e-pgdump:
+#  investment-tracker-e2e-pgdata:
 
 
 
