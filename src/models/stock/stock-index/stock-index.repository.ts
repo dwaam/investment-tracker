@@ -10,7 +10,7 @@ export class StockIndexRepository extends Repository<StockIndex> {
       .insert()
       .into(StockIndex)
       .values(stockIndices)
-      .orUpdate(['ticker', 'name', 'currency'], ['isin'])
+      .orUpdate(['ticker', 'name', 'currency', 'country'], ['isin'])
       .execute();
   }
 }
