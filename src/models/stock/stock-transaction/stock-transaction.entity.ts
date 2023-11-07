@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
@@ -8,10 +8,11 @@ export class StockTransaction {
   @PrimaryColumn({ name: 'id', type: 'bigint', generated: 'increment' })
   id: string;
 
+  @Index({ unique: true })
   @Column({ name: 'transaction_id', type: 'text' })
   transactionId: string;
 
-  @Column({ name: 'stock_id', type: 'uuid' })
+  @Column({ name: 'stock_id', type: 'text' })
   stockId: string;
 
   @Column({ name: 'date', type: 'date' })

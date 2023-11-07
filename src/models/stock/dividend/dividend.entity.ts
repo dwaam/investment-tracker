@@ -12,7 +12,7 @@ export class Dividend {
   @Column({ name: 'date', type: 'date' })
   date: Date;
 
-  @Column({ name: 'stock_id', type: 'uuid' })
+  @Column({ name: 'stock_id', type: 'text' })
   stockId: string;
 
   @Column({ name: 'number_of_shares', type: 'double precision' })

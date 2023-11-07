@@ -30,7 +30,7 @@ export class StockTransactionRepository extends Repository<StockTransaction> {
       .insert()
       .into(StockTransaction)
       .values(upsertStockTransactions)
-      .orUpdate([], ['transaction_id'])
+      .orIgnore()
       .execute();
   }
 }

@@ -33,11 +33,6 @@ export class DividendRepository extends Repository<Dividend> {
   }
 
   async upsertMany(upsertDividends: UpsertDividend[]): Promise<void> {
-    await this.createQueryBuilder()
-      .insert()
-      .into(Dividend)
-      .values(upsertDividends)
-      .orUpdate([], ['date', 'number_of_shares', 'price_per_share', 'stock_id'])
-      .execute();
+    await this.createQueryBuilder().insert().into(Dividend).values(upsertDividends).orIgnore().execute();
   }
 }
