@@ -26,9 +26,9 @@ export class StockIndex {
   category: StockCategory | null;
 
   @Column({ name: 'country', nullable: true, type: 'varchar', length: 2 })
-  countryCode: string | null;
+  countryCode: string;
 
-  @JoinColumn({ name: 'country' })
-  @ManyToOne(() => CountryTax, (country) => country.country, { nullable: true })
+  // @JoinColumn({ name: 'country' })
+  // @ManyToOne(() => CountryTax, (country) => country.country, { nullable: true })
   country?: CountryTax;
 }
