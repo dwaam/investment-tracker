@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateResult } from 'typeorm';
-import { chunk, uniq } from 'lodash';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { UpdateStockIndexDto } from '@/models/stock/stock-index/dto/update-stock-index.dto';
-import { StockIndexRepository } from '@/models/stock/stock-index/stock-index.repository';
 import { getLoggerFor } from '@/utils/logger.util';
+import { StockIndexRepository } from '@/models/stock/stock-index/stock-index.repository';
 
 @Injectable()
 export class StockIndexService {
