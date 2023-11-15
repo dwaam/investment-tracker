@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { UpdateStockIndexDto } from '@/models/stock/stock-index/dto/update-stock-index.dto';
@@ -18,10 +17,12 @@ export class StockIndexService {
     return this.stockIndexRepository.find();
   }
 
-  async update(updateStockIndexDto: UpdateStockIndexDto): Promise<UpdateResult> {
-    this.logger.info(`Updating index with ISIN ${updateStockIndexDto.id}.`);
+  async patch(stockIndexId: string, updateStockIndexDto: UpdateStockIndexDto): Promise<StockIndex> {
+    this.logger.info(`Updating index with ISIN ${stockIndexId}.`);
 
-    return this.stockIndexRepository.update(updateStockIndexDto.id, updateStockIndexDto);
+    await this.stockIndexRepository.update(stockIndexId, updateStockIndexDto);
+
+    return this.stockIndexRepository.findOneBy({ id: stockIndexId });
   }
 
   async upsertMany(stockIndices: StockIndex[]): Promise<void> {
