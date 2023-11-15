@@ -26,6 +26,31 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Database setup
+
+#### Reset database
+
+```bash
+# Delete the docker container once inside the project docker folder
+$ docker-compose down
+
+# Display all volumes
+$ docker volume ls
+
+# Delete the docker volumes
+$ docker volume rm docker_investment-tracker-pgdata
+$ docker volume rm docker_investment-tracker-pgdump
+
+# Create a new docker container in detached mode
+$ docker-compose up -d
+
+# Run migrations to populate database
+$ npm run migration
+
+# Select according to your needs (usually RUN)
+Type RUN to run the already generated migration file
+```
+
 ## Installation
 
 ```bash
@@ -40,7 +65,10 @@ $ cp .env.dummy .env
 # Modify .env
 
 # Run migrations to populate database
-$ npm run migration:run
+$ npm run migration
+
+# Select according to your needs (usually RUN)
+Type RUN to run the already generated migration file
 ```
 
 ## Migration
