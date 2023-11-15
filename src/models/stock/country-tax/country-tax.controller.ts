@@ -4,7 +4,7 @@ import { CountryTaxService } from '@/models/stock/country-tax/country-tax.servic
 import { CountryTax } from '@/models/stock/country-tax/country-tax.entity';
 import { PatchCountryTax } from '@/models/stock/country-tax/country-tax.interfaces';
 
-@Controller('country-taxes')
+@Controller('stocks/country-taxes')
 export class CountryTaxController {
   constructor(private countryTaxService: CountryTaxService) {}
 
