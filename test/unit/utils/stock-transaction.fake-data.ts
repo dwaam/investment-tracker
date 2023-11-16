@@ -1,4 +1,4 @@
-import { DataFromTrading212 } from '@/models/asset/asset.interface';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
 import { InvestedAmountsByMonth } from '@/models/stock/stock.interface';

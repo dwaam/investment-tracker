@@ -1,7 +1,7 @@
-import { isEqual, uniqBy, uniqWith } from 'lodash';
+import { isEqual, uniqWith } from 'lodash';
 
-import { TRANSACTION_TYPE_LINK } from '@/models/asset/stock-integration/stock-integration.constant';
-import { DataFromTrading212 } from '@/models/asset/asset.interface';
+import { TRANSACTION_TYPE_LINK } from '@/models/stock/stock-integration/stock-integration.constant';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
 import { DividendTypeEnum } from '@/models/stock/dividend/dividend.enum';
 import { StockAccountEnum } from '@/models/stock/stock.enum';
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';

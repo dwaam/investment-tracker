@@ -1,10 +1,10 @@
 import { when } from 'jest-when';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { convertToStockTransactions } from '@/models/asset/stock-integration/stock-integration.converter';
+import { convertToStockTransactions } from '@/models/stock/stock-integration/stock-integration.converter';
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
-import { StockIntegrationService } from '@/models/asset/stock-integration/stock-integration.service';
-import { DataFromTrading212 } from '@/models/asset/asset.interface';
+import { StockIntegrationService } from '@/models/stock/stock-integration/stock-integration.service';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
 
 import { defaultDataFromTrading212, defaultStockTransaction } from '#/unit/utils/stock-transaction.fake-data';
 

@@ -3,14 +3,14 @@ import { createReadStream } from 'fs';
 import { Injectable } from '@nestjs/common';
 import * as papa from 'papaparse';
 
-import { DataFromTrading212 } from '@/models/asset/asset.interface';
-import { TRADING_212_COLUMN_NAMES } from '@/models/asset/stock-integration/stock-integration.constant';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
+import { TRADING_212_COLUMN_NAMES } from '@/models/stock/stock-integration/stock-integration.constant';
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import {
   convertToDividends,
   convertToStockIndices,
   convertToStockTransactions,
-} from '@/models/asset/stock-integration/stock-integration.converter';
+} from '@/models/stock/stock-integration/stock-integration.converter';
 import { DividendService } from '@/models/stock/dividend/dividend.service';
 import { getLoggerFor } from '@/utils/logger.util';
 import { StockIndexService } from '@/models/stock/stock-index/stock-index.service';
