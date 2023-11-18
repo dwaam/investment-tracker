@@ -5,8 +5,10 @@ import { Dividend } from '@/models/stock/dividend/dividend.entity';
 import { CountryTax } from '@/models/stock/country-tax/country-tax.entity';
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { User } from '@/models/user/user.entity';
+import { Asset } from '@/models/asset/asset.entity';
+import { AssetEntry } from '@/models/asset/asset-entry/asset-entry.entity';
 
-export const entities = [CountryTax, StockIndex, StockTransaction, Dividend, User];
+export const entities = [CountryTax, StockIndex, StockTransaction, Dividend, User, Asset, AssetEntry];
 
 export const createConfig = () =>
   ({

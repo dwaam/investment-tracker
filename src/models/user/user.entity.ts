@@ -1,6 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { IsString, MaxLength, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
+
+import { Asset } from '@/models/asset/asset.entity';
 
 @Entity('user')
 export class User {
@@ -24,4 +26,7 @@ export class User {
   @Exclude()
   @Column({ name: 'password', type: 'text', nullable: false })
   password: string;
+
+  @OneToMany(() => Asset, (asset) => asset.user)
+  assets: Asset[];
 }

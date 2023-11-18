@@ -1,9 +1,9 @@
-import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
 import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 import {
   convertToStockTransaction,
   convertToStockTransactions,
 } from '@/models/stock/stock-integration/stock-integration.converter';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/stock-integration.interface';
 
 import { defaultDataFromTrading212, defaultStockTransaction } from '#/unit/utils/stock-transaction.fake-data';
 
