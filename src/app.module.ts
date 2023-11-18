@@ -11,6 +11,8 @@ import { CountryTaxModule } from '@/models/stock/country-tax/country-tax.module'
 import { UserModule } from '@/models/user/user.module';
 import { AuthModule } from '@/auth/auth.module';
 import { CallerHeaderMiddleware } from '@/auth/middlewares/caller-header.middleware';
+import { AssetEntryModule } from '@/models/asset/asset-entry/asset-entry.module';
+import { StockIntegrationModule } from '@/models/stock/stock-integration/stock-integration.module';
 
 @Module({
   imports: [
@@ -19,8 +21,10 @@ import { CallerHeaderMiddleware } from '@/auth/middlewares/caller-header.middlew
     }),
     StockModule,
     AssetModule,
+    AssetEntryModule,
     StockIndexModule,
     CountryTaxModule,
+    StockIntegrationModule,
     TypeOrmModule.forRoot(createConfig()),
     AuthModule,
     UserModule,

@@ -11,9 +11,12 @@ export class AssetEntryService {
 
   constructor(private assetRepository: AssetEntryRepository) {}
 
-  async create(asset: CreateAssetEntry): Promise<AssetEntry> {
-    this.logger.info(`Creating asset entry for asset ${asset.assetId}.`);
-    
-    return this.assetRepository.save(asset);
+  async create(assetId: string, asset: CreateAssetEntry): Promise<AssetEntry> {
+    this.logger.info(`Creating asset entry for asset ${assetId}.`);
+
+    return this.assetRepository.save({
+      ...asset,
+      assetId,
+    });
   }
 }

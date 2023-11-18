@@ -23,6 +23,16 @@ export class AssetService {
   async find(userId: string): Promise<Asset[]> {
     this.logger.info(`Find assets for user ${userId}.`);
 
-    return this.assetRepository.findBy({ userId });
+    return this.assetRepository.find({
+      where: { userId },
+      relations: {
+        entries: true,
+      },
+      order: {
+        entries: {
+          date: 'DESC',
+        },
+      },
+    });
   }
 }
