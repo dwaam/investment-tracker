@@ -1,7 +1,9 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { IsUUID } from 'class-validator';
 
 import { StockIndex } from '@/models/stock/stock-index/stock-index.entity';
 import { TransactionTypeEnum } from '@/models/stock/stock-transaction/stock-transaction.enum';
+import { User } from '@/models/user/user.entity';
 
 @Entity('stock_transactions')
 export class StockTransaction {
@@ -41,7 +43,15 @@ export class StockTransaction {
   @Column({ name: 'currency_conversion_fee', type: 'double precision' })
   currencyConversionFee: number;
 
-  @JoinColumn({ name: 'index_id' })
+  @JoinColumn({ name: 'stock_id' })
   @ManyToOne(() => StockIndex, (index) => index.id, { cascade: ['insert', 'update'] })
   index?: StockIndex;
+
+  @IsUUID()
+  @Column({ name: 'user_id', type: 'uuid' })
+  userId: string;
+
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, (user) => user.stockTransactions)
+  user: User;
 }

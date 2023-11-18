@@ -3,6 +3,8 @@ import { IsString, MaxLength, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
 
 import { Asset } from '@/models/asset/asset.entity';
+import { Dividend } from '@/models/stock/dividend/dividend.entity';
+import { StockTransaction } from '@/models/stock/stock-transaction/stock-transaction.entity';
 
 @Entity('user')
 export class User {
@@ -29,4 +31,10 @@ export class User {
 
   @OneToMany(() => Asset, (asset) => asset.user)
   assets: Asset[];
+
+  @OneToMany(() => Dividend, (dividend) => dividend.user)
+  dividends: Dividend[];
+
+  @OneToMany(() => StockTransaction, (stockTransaction) => stockTransaction.user)
+  stockTransactions: StockTransaction[];
 }

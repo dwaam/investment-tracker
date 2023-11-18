@@ -25,8 +25,8 @@ export class StockIntegrationService {
     private stockIndexService: StockIndexService,
   ) {}
 
-  readFile(fileName: string): void {
-    this.logger.info(`Reading file with name "${fileName}".`);
+  readFile(userId: string, fileName: string): void {
+    this.logger.info(`Reading file with name "${fileName}" for user "${userId}".`);
 
     const parseStream = papa.parse(papa.NODE_STREAM_INPUT, {
       header: true,
@@ -45,11 +45,11 @@ export class StockIntegrationService {
     });
 
     parseStream.on('finish', async () => {
-      return this.handleChunkOfData(data);
+      return this.handleChunkOfData(userId, data);
     });
   }
 
-  async handleChunkOfData(stockData: DataFromTrading212[]): Promise<void> {
+  async handleChunkOfData(userId: string, stockData: DataFromTrading212[]): Promise<void> {
     const commonTransactions = stockData.filter((transaction) =>
       ['Market buy', 'Market sell'].includes(transaction.action),
     );
@@ -57,14 +57,14 @@ export class StockIntegrationService {
       ['Dividend (Ordinary)', 'Dividend (Property income)', 'Dividend (Bonus)'].includes(transaction.action),
     );
 
-    await this.integrateStockIndices([...commonTransactions, ...dividendTransactions]);
+    await this.integrateStockIndices(userId, [...commonTransactions, ...dividendTransactions]);
 
-    await this.integrateCommonTransactions(commonTransactions);
+    await this.integrateCommonTransactions(userId, commonTransactions);
 
-    await this.integrateDividends(dividendTransactions);
+    await this.integrateDividends(userId, dividendTransactions);
   }
 
-  async integrateStockIndices(transactions: DataFromTrading212[]): Promise<void> {
+  async integrateStockIndices(userId: string, transactions: DataFromTrading212[]): Promise<void> {
     this.logger.info(`Integrate stock indices from ${transactions.length} transactions.`);
 
     const convertedTransactions = convertToStockIndices(transactions);
@@ -72,18 +72,18 @@ export class StockIntegrationService {
     return this.stockIndexService.upsertMany(convertedTransactions);
   }
 
-  async integrateCommonTransactions(commonTransactions: DataFromTrading212[]): Promise<void> {
+  async integrateCommonTransactions(userId: string, commonTransactions: DataFromTrading212[]): Promise<void> {
     this.logger.info(`Integrate common transactions from ${commonTransactions.length} transactions.`);
 
-    const convertedTransactions = convertToStockTransactions(commonTransactions);
+    const convertedTransactions = convertToStockTransactions(userId, commonTransactions);
 
     return this.stockTransactionService.upsertMany(convertedTransactions);
   }
 
-  async integrateDividends(dividendTransactions: DataFromTrading212[]): Promise<void> {
+  async integrateDividends(userId: string, dividendTransactions: DataFromTrading212[]): Promise<void> {
     this.logger.info(`Integrate dividends from ${dividendTransactions.length} transactions.`);
 
-    const convertedTransactions = convertToDividends(dividendTransactions);
+    const convertedTransactions = convertToDividends(userId, dividendTransactions);
 
     return this.dividendService.upsertMany(convertedTransactions);
   }

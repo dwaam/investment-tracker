@@ -1,4 +1,4 @@
-import { Controller, Param, Post, UseInterceptors } from '@nestjs/common';
+import { Controller, Headers, Param, Post, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
 
@@ -19,7 +19,7 @@ export class StockIntegrationController {
       }),
     }),
   )
-  uploadFile(@Param() params): void {
-    return this.stockIntegrationService.readFile(`files/${params.filename}`);
+  uploadFile(@Param() params, @Headers('caller-id') userId: string): void {
+    return this.stockIntegrationService.readFile(userId, `files/${params.filename}`);
   }
 }

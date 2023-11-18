@@ -1,5 +1,5 @@
 import { Dictionary } from 'express-serve-static-core';
-import { OmitType } from '@nestjs/mapped-types';
+import { PickType } from '@nestjs/mapped-types';
 
 import { Dividend } from '@/models/stock/dividend/dividend.entity';
 
@@ -20,4 +20,14 @@ export interface TaxForm {
   dividendsByCountry?: Dictionary<SummaryForDividendsFromSameCountry>;
 }
 
-export class UpsertDividend extends OmitType(Dividend, ['id'] as const) {}
+export class UpsertDividend extends PickType(Dividend, [
+  'date',
+  'stockId',
+  'numberOfShares',
+  'pricePerShare',
+  'type',
+  'totalInEuro',
+  'withholdingTax',
+  'userId',
+  'account',
+] as const) {}

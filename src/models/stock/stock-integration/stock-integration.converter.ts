@@ -8,7 +8,7 @@ import { UpsertStockTransaction } from '@/models/stock/stock-transaction/stock-t
 import { UpsertDividend } from '@/models/stock/dividend/dividend.interfaces';
 import { DataFromTrading212 } from '@/models/stock/stock-integration/stock-integration.interface';
 
-export function convertToStockTransaction(transaction: DataFromTrading212): UpsertStockTransaction {
+export function convertToStockTransaction(userId: string, transaction: DataFromTrading212): UpsertStockTransaction {
   return {
     transactionId: transaction.transactionId,
     action: TRANSACTION_TYPE_LINK[transaction.action],
@@ -19,11 +19,15 @@ export function convertToStockTransaction(transaction: DataFromTrading212): Upse
     pricePerShare: +transaction.pricePerShare,
     totalInEuro: +transaction.total,
     stockId: transaction.isin,
+    userId,
   };
 }
 
-export function convertToStockTransactions(transactions: DataFromTrading212[]): UpsertStockTransaction[] {
-  return transactions.map((transaction) => convertToStockTransaction(transaction));
+export function convertToStockTransactions(
+  userId: string,
+  transactions: DataFromTrading212[],
+): UpsertStockTransaction[] {
+  return transactions.map((transaction) => convertToStockTransaction(userId, transaction));
 }
 
 function getTypeFromAction(action: string): DividendTypeEnum {
@@ -41,7 +45,7 @@ function getTypeFromAction(action: string): DividendTypeEnum {
   }
 }
 
-export function convertToUpsertDividend(transaction: DataFromTrading212): UpsertDividend {
+export function convertToUpsertDividend(userId: string, transaction: DataFromTrading212): UpsertDividend {
   return {
     date: new Date(transaction.date),
     numberOfShares: +transaction.numberOfShares,
@@ -51,11 +55,12 @@ export function convertToUpsertDividend(transaction: DataFromTrading212): Upsert
     withholdingTax: +transaction.withholdingTax,
     account: StockAccountEnum.TRADING_212,
     stockId: transaction.isin,
+    userId,
   };
 }
 
-export function convertToDividends(transactions: DataFromTrading212[]): UpsertDividend[] {
-  return transactions.map((transaction) => convertToUpsertDividend(transaction));
+export function convertToDividends(userId: string, transactions: DataFromTrading212[]): UpsertDividend[] {
+  return transactions.map((transaction) => convertToUpsertDividend(userId, transaction));
 }
 
 export function convertToStockIndices(transactions: DataFromTrading212[]): StockIndex[] {
