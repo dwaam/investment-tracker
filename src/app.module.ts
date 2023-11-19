@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -10,6 +10,9 @@ import { StockIndexModule } from '@/models/stock/stock-index/stock-index.module'
 import { CountryTaxModule } from '@/models/stock/country-tax/country-tax.module';
 import { UserModule } from '@/models/user/user.module';
 import { AuthModule } from '@/auth/auth.module';
+import { CallerHeaderMiddleware } from '@/auth/middlewares/caller-header.middleware';
+import { AssetEntryModule } from '@/models/asset/asset-entry/asset-entry.module';
+import { StockIntegrationModule } from '@/models/stock/stock-integration/stock-integration.module';
 
 @Module({
   imports: [
@@ -18,8 +21,10 @@ import { AuthModule } from '@/auth/auth.module';
     }),
     StockModule,
     AssetModule,
+    AssetEntryModule,
     StockIndexModule,
     CountryTaxModule,
+    StockIntegrationModule,
     TypeOrmModule.forRoot(createConfig()),
     AuthModule,
     UserModule,
@@ -31,4 +36,8 @@ import { AuthModule } from '@/auth/auth.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(CallerHeaderMiddleware).exclude({ path: 'auth/login', method: RequestMethod.POST }).forRoutes('*');
+  }
+}

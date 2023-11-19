@@ -3,7 +3,6 @@ import { createReadStream } from 'fs';
 import { Injectable } from '@nestjs/common';
 import * as papa from 'papaparse';
 
-import { DataFromTrading212 } from '@/models/stock/stock-integration/asset.interface';
 import { TRADING_212_COLUMN_NAMES } from '@/models/stock/stock-integration/stock-integration.constant';
 import { StockTransactionService } from '@/models/stock/stock-transaction/stock-transaction.service';
 import {
@@ -14,6 +13,7 @@ import {
 import { DividendService } from '@/models/stock/dividend/dividend.service';
 import { getLoggerFor } from '@/utils/logger.util';
 import { StockIndexService } from '@/models/stock/stock-index/stock-index.service';
+import { DataFromTrading212 } from '@/models/stock/stock-integration/stock-integration.interface';
 
 @Injectable()
 export class StockIntegrationService {
