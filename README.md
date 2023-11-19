@@ -3,6 +3,7 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
@@ -82,4 +83,22 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Delivery
+
+```bash
+# registry
+$ registry.damienwalle.fr
+
+$ docker build --platform=linux/amd64 -t investment-tracker -f Dockerfile .
+
+# Tag it
+$ docker tag investment-tracker:latest registry.damienwalle.fr/investment-tracker
+
+# Push to docker registry
+$ docker push registry.damienwalle.fr/investment-tracker:latest
+
+#Your image should be visible here
+$ https://registry.damienwalle.fr/v2/_catalog
 ```
